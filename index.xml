@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Anabila</title>
+    <link>https://anthonyabeo.github.io/</link>
+    <description>Recent content on Anabila</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 20 Nov 2018 15:36:33 +0000</lastBuildDate>
+    
+	<atom:link href="https://anthonyabeo.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Setting Up MongoDB Replica Set On Ubuntu 12.04</title>
+      <link>https://anthonyabeo.github.io/posts/mongo-replication/</link>
+      <pubDate>Tue, 20 Nov 2018 15:36:33 +0000</pubDate>
+      
+      <guid>https://anthonyabeo.github.io/posts/mongo-replication/</guid>
+      <description>Introduction This is a tutorial detailing how to configure a MongoDB replica set. If you are reading this, we can assume you know what a replica set, why is is necessary and how it works. Otherwise you can checkout the MongoDB documentation for replica sets and clusters.
+In this tutorial, i will be using 3 Vagrant Ubuntu 12.04 boxes and MongoDB version 2.4.10. You should be comfortable spinning up vagrant boxes as this tutorial will not cover that.</description>
+    </item>
+    
+    <item>
+      <title>The Circuitry of Computer Memory</title>
+      <link>https://anthonyabeo.github.io/posts/memory/</link>
+      <pubDate>Sun, 13 May 2018 16:39:54 +0000</pubDate>
+      
+      <guid>https://anthonyabeo.github.io/posts/memory/</guid>
+      <description>BACKGROUND A computer is useful because it is a device that can not only execute instructions, but can also store and retrieve information along the way to aid in the execution of such instructions. Like everything else in an electronic computer,the compenent that handles this functionality (the memory subsystem) is made up of electronic circuits. In this article, i will like to share a high-level overview of what this circuitry looks like and how it operates.</description>
+    </item>
+    
+    <item>
+      <title>About Me</title>
+      <link>https://anthonyabeo.github.io/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://anthonyabeo.github.io/about/</guid>
+      <description> About Me  I am a software developer and a hobbyist artist. i have particular interest in Virtual Machines, Emulators and Containers. In my free time i like to play video games and read a book or two.
+Hi, my name is Abeo, Anthony Anabila and it was nice meeting you.
+ </description>
+    </item>
+    
+  </channel>
+</rss>

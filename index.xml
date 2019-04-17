@@ -6,10 +6,20 @@
     <description>Recent content on Anabila</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 20 Nov 2018 15:36:33 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Apr 2019 08:31:40 +0000</lastBuildDate>
     
 	<atom:link href="https://anthonyabeo.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Some (useful) properties of ASCII characters</title>
+      <link>https://anthonyabeo.github.io/posts/useful-properties-of-ascii-characters/</link>
+      <pubDate>Wed, 17 Apr 2019 08:31:40 +0000</pubDate>
+      
+      <guid>https://anthonyabeo.github.io/posts/useful-properties-of-ascii-characters/</guid>
+      <description>When writing programs that deal with characters and strings, some of the methods programmers tend to use include, finding of a character is a digit or alphabet, convert a character from lowercase to uppercase or vice versa, etc. These functionalities come with almost all programming languages and in this article, we will be looking at properties of ASCII characters that make it easier to implement such functionality efficiently.
+Property I: Bit positions 5 and 6 determines the group a character belongs to.</description>
+    </item>
     
     <item>
       <title>Setting Up MongoDB Replica Set On Ubuntu 12.04</title>
@@ -27,7 +37,7 @@ In this tutorial, i will be using 3 Vagrant Ubuntu 12.04 boxes and MongoDB versi
       <pubDate>Sun, 13 May 2018 16:39:54 +0000</pubDate>
       
       <guid>https://anthonyabeo.github.io/posts/memory/</guid>
-      <description>BACKGROUND A computer is useful because it is a device that can not only execute instructions, but can also store and retrieve information along the way to aid in the execution of such instructions. Like everything else in an electronic computer,the compenent that handles this functionality (the memory subsystem) is made up of electronic circuits. In this article, i will like to share a high-level overview of what this circuitry looks like and how it operates.</description>
+      <description>BACKGROUND A computer is useful because it is a device that can not only execute instructions but can also store and retrieve information along the way to aid in the execution of such instructions. Like everything else in an electronic computer, the component that handles this functionality (the memory subsystem) is made up of electronic circuits. In this article, I will like to share a high-level overview of what this circuitry looks like and how it operates.</description>
     </item>
     
     <item>

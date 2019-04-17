@@ -11,10 +11,10 @@
 
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="The Circuitry of Computer Memory"/>
-<meta name="twitter:description" content="BACKGROUND A computer is useful because it is a device that can not only execute instructions, but can also store and retrieve information along the way to aid in the execution of such instructions. Like everything else in an electronic computer,the compenent that handles this functionality (the memory subsystem) is made up of electronic circuits. In this article, i will like to share a high-level overview of what this circuitry looks like and how it operates."/>
+<meta name="twitter:description" content="BACKGROUND A computer is useful because it is a device that can not only execute instructions but can also store and retrieve information along the way to aid in the execution of such instructions. Like everything else in an electronic computer, the component that handles this functionality (the memory subsystem) is made up of electronic circuits. In this article, I will like to share a high-level overview of what this circuitry looks like and how it operates."/>
 
     <meta property="og:title" content="The Circuitry of Computer Memory" />
-<meta property="og:description" content="BACKGROUND A computer is useful because it is a device that can not only execute instructions, but can also store and retrieve information along the way to aid in the execution of such instructions. Like everything else in an electronic computer,the compenent that handles this functionality (the memory subsystem) is made up of electronic circuits. In this article, i will like to share a high-level overview of what this circuitry looks like and how it operates." />
+<meta property="og:description" content="BACKGROUND A computer is useful because it is a device that can not only execute instructions but can also store and retrieve information along the way to aid in the execution of such instructions. Like everything else in an electronic computer, the component that handles this functionality (the memory subsystem) is made up of electronic circuits. In this article, I will like to share a high-level overview of what this circuitry looks like and how it operates." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://anthonyabeo.github.io/posts/memory/" />
 <meta property="article:published_time" content="2018-05-13T16:39:54&#43;00:00"/>
@@ -125,10 +125,11 @@
 
 <h3 id="background">BACKGROUND</h3>
 
-<p>A computer is useful because it is a device that can not only execute instructions, but can also store and retrieve information along the way to aid in the execution of such instructions. Like everything else in an electronic computer,the compenent that handles this functionality (the memory subsystem) is made up of electronic circuits. In this article, i will like to share a high-level overview of what this circuitry looks like and how it operates. Electronic circuits are built from basic elements called <strong>logic gates</strong> (AND, OR, NAND, etc). It is advisable that the reader know these basic elements and understand how they operate as this will make it easier to follow along with the material. This wikipedia <a href="https://en.wikipedia.org/wiki/Logic_gate">article</a> is a start.</p>
+<p>A computer is useful because it is a device that can not only execute instructions but can also store and retrieve information along the way to aid in the execution of such instructions. Like everything else in an electronic computer, the component that handles this functionality (the memory subsystem) is made up of electronic circuits. In this article, I will like to share a high-level overview of what this circuitry looks like and how it operates. Electronic circuits are built from basic elements called <strong>logic gates</strong> (AND, OR, NAND, etc). It is advisable that the reader know these basic elements and understands how they operate as this will make it easier to follow along with the material. This Wikipedia <a href="https://en.wikipedia.org/wiki/Logic_gate">article</a> is a start.</p>
 
-<p>Speaking of logic circuits, they can be classified under two broad type: <strong>Combinational</strong> and <strong>Sequential</strong>. Combinatinal circuits such as <strong>multiplers</strong> or <strong>decoders</strong> compute outputs that depend solely on the combination of input they receive. Moreover, the chips that perform these operations cannot maintain state. That is, they simply spit out whatever output they produced based on the inputs they are provided. Sequential circuits on the other hand are able to &lsquo;store&rsquo; the output of a prior computation and possibly use it as part of the input in subsequent operations.
-The remainder of this article will discuss a sequential circuits called the <strong>R-S Latch</strong> and <strong>Gated D-Latch</strong> and how they are used to build memory.</p>
+<p>Speaking of logic circuits, they can be classified under two broad type: <strong>Combinational</strong> and <strong>Sequential</strong>. Combinational circuits such as <strong>multiplexers</strong> or <strong>decoders</strong> compute outputs that depend solely on the combination of input they receive. Moreover, the chips that perform these operations cannot maintain state. That is, they simply spit out whatever output they produced based on the inputs they are provided. Sequential circuits, on the other hand, are able to &lsquo;store&rsquo; the output of a prior computation and possibly use it as part of the input in subsequent operations.</p>
+
+<p>The remainder of this article will discuss sequential circuits called the <strong>R-S Latch</strong> and <strong>Gated D-Latch</strong> and how they are used to build memory.</p>
 
 <h3 id="r-s-latch">R-S LATCH</h3>
 
@@ -136,12 +137,13 @@ The remainder of this article will discuss a sequential circuits called the <str
 
 <p><img src="https://anthonyabeo.github.io/images/memory/rslatch.png" alt="R-S Latch" /></p>
 
-<p>It consists of two NOR gates wired such that the output of one NOR gate is connected to the input of the other. In addition, the circuit has two inputs labeled S (set) and R (reset). It also has two outputs Q and ~Q. To understand how such a circuit works, we need to look at all the possible states the input can be in and their corresponsing outputs.</p>
+<p>It consists of two NOR gates wired such that the output of one NOR gate is connected to the input of the other. In addition, the circuit has two inputs labeled S (set) and R (reset). It also has two outputs Q and ~Q. To understand how such a circuit works, we need to look at all the possible states the input can be in and their corresponding outputs.</p>
 
 <h4 id="case-i-r-1-s-0">CASE I: R=1, S=0</h4>
 
-<p><img src="https://anthonyabeo.github.io/images/memory/case1.png" alt="CASE 1" />
-At some clock cycle T, if we assert the reset line, R and cleared the set (S) line, the output is Q=0 and ~Q=1. If at some time T+1, if we clear R and set S, then we get Q=1 and ~Q=0. Then we say out circuit stores value 1.</p>
+<p><img src="https://anthonyabeo.github.io/images/memory/case1.png" alt="CASE 1" /></p>
+
+<p>At some clock cycle T, if we assert the reset line, R and cleared the set (S) line, the output is Q=0 and ~Q=1. If at some time T+1, if we clear R and set S, then we get Q=1 and ~Q=0. Then we say out circuit stores value 1.</p>
 
 <h4 id="case-ii-r-0-s-1">CASE II: R=0, S=1</h4>
 
@@ -156,9 +158,8 @@ If both R and S are 0, then it means the value of our output Q is whatever the v
 <h4 id="case-iv-r-1-s-1">CASE IV: R=1, S=1</h4>
 
 <p><img src="https://anthonyabeo.github.io/images/memory/case4.png" alt="CASE 4" />
-Asserting both the set and reset lines produces Q=0 and ~Q=0. One must make sure that both R and S are not asserted at the same time because the circuit does not behave deterministic in this state.</p>
-
-<p>Putting all this together, we say that at some clock cycle T, the circuit produces some value Q which is 0 or 1 and represents the current state of the circuit. When R=0 and S=0, the circuit will &lsquo;remember&rsquo; this value. Setting or clearing R and/or S will change the value currently stored in the circuit.</p>
+Asserting both the set and reset lines produces Q=0 and ~Q=0. One must make sure that both R and S are not asserted at the same time because the circuit does not behave deterministically in this state.
+Putting all this together, we say that at some clock cycle T, the circuit produces some value Q which is 0 or 1 and represents the current state of the circuit. When R=0 and S=0, the circuit will &lsquo;remember&rsquo; this value. Setting or clearing R and/or S will change the value currently stored in the circuit.</p>
 
 <h3 id="d-latch">D LATCH</h3>
 
@@ -171,15 +172,15 @@ The D-Latch uses the R-S Latch in addition to some additional gates to provide a
 
 <p><img src="https://anthonyabeo.github.io/images/memory/dlatch1.png" alt="D LATCH 1" /></p>
 
-<p>Clearing the WE line will ensure that the value currently store in the circuit is not modified.</p>
+<p>Clearing the WE line will ensure that the value currently stored in the circuit is not modified.</p>
 
 <p><img src="https://anthonyabeo.github.io/images/memory/dlatch2.png" alt="D LATCH 2" /></p>
 
-<p>So far, we have a circuit that is able to store 1 bit of information. We provide the data on the D line and use the WE line to indicate whether the new data should be stored. Definitely, a circuit that stores 1 bit will not be very useful to a computer as most computers operate on multiples of 8 bit data.</p>
+<p>So far, we have a circuit that is able to store 1 bit of information. We provide the data on the D line and use the WE line to indicate whether the new data should be stored. Definitely, a circuit that stores 1 bit will not be very useful to a computer as most computers operate on multiples of 8-bit data.</p>
 
 <h3 id="registers">REGISTERS</h3>
 
-<p>We can combine n D-Latch circuits to create an n-bit register. An array of 8 D Latches will give us an 8-bit register, 16 latches gives a 16 bit register and so on. From the diagram below,we have a 5-bit register with the data fields set to 10100 with the WE line asserted. We therefore see that the output field also has 10100. We can go on to stack several of such registers to create larger banks of memory.</p>
+<p>We can combine n D-Latch circuits to create an n-bit register. An array of 8 D Latches will give us an 8-bit register, 16 latches give a 16-bit register and so on. From the diagram below, we have a 5-bit register with the data fields set to 10100 with the WE line asserted. We, therefore, see that the output field also has 10100. We can go on to stack several of such registers to create larger banks of memory.</p>
 
 <p><img src="https://anthonyabeo.github.io/images/memory/registers.png" alt="Register" /></p>
 

@@ -129,36 +129,36 @@ In this tutorial, i will be using 3 Vagrant Ubuntu 12.04 boxes and MongoDB versi
 <h4 id="configure-vagrant-vms">Configure Vagrant VMs</h4>
 
 <p>I am assuming you have downloaded the <code>ubuntu/precise64</code> 12.04 box locally. So run the following commands to create vagrant boxes.</p>
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#007f7f"># Create a directory for each VM.</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># Create a directory for each VM.</span>
 $ mkdir -p mongo01
 $ mkdir -p mongo02
 $ mkdir -p mongo03
 
-<span style="color:#007f7f"># Create the Vagrant configuration files.</span>
+<span style="color:#75715e"># Create the Vagrant configuration files.</span>
 $ vagrant init ubuntu/precise64 --output mongo01/Vagrantfile
 $ vagrant init ubuntu/precise64 --output mongo02/Vagrantfile
 $ vagrant init ubuntu/precise64 --output mongo03/Vagrantfile</code></pre></div>
 <p>Next thing is to edit the Vagrantfile for each VM to have a specific hostname and IP address. Open each Vagrantfile and look for the lines that start with <code>config.vm.network</code>, uncomment it and assign it any IP address you want and add a line for the hostname as indicated below.</p>
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#007f7f"># The IPs and the names are up to you.</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># The IPs and the names are up to you.</span>
 
-<span style="color:#007f7f"># mongo01</span>
-config.vm.hostname = <span style="color:#0ff;font-weight:bold">&#34;mongo01&#34;</span>
-config.vm.network private_network, ip: <span style="color:#0ff;font-weight:bold">&#34;192.168.33.1&#34;</span>
+<span style="color:#75715e"># mongo01</span>
+config<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>hostname <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;mongo01&#34;</span>
+config<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>network private_network, ip: <span style="color:#e6db74">&#34;192.168.33.1&#34;</span>
 
-<span style="color:#007f7f"># mongo02</span>
-config.vm.hostname = <span style="color:#0ff;font-weight:bold">&#34;mongo02&#34;</span>
-config.vm.network private_network, ip: <span style="color:#0ff;font-weight:bold">&#34;192.168.33.2&#34;</span>
+<span style="color:#75715e"># mongo02</span>
+config<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>hostname <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;mongo02&#34;</span>
+config<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>network private_network, ip: <span style="color:#e6db74">&#34;192.168.33.2&#34;</span>
 
-<span style="color:#007f7f"># mongo03</span>
-config.vm.hostname = <span style="color:#0ff;font-weight:bold">&#34;mongo03&#34;</span>
-config.vm.network private_network, ip: <span style="color:#0ff;font-weight:bold">&#34;192.168.33.3&#34;</span></code></pre></div>
+<span style="color:#75715e"># mongo03</span>
+config<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>hostname <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;mongo03&#34;</span>
+config<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>network private_network, ip: <span style="color:#e6db74">&#34;192.168.33.3&#34;</span></code></pre></div>
 <h4 id="find-vms-by-hostname-or-dns">Find VMs by hostname or DNS</h4>
 
 <p>Now start the VMs with <code>vagrant up</code> and <code>ssh</code> into each with <code>vagrant ssh</code>. Now to avoid referring to each VM by the IP address, let&rsquo;s make sure we can refer to it by hostname or DNS by adding the IP addresses to the <code>/etc/hosts</code> files. Open this file in each VM and
 add the following lines.</p>
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ff0;font-weight:bold">192.169</span>.<span style="color:#ff0;font-weight:bold">33.1</span>    mongo01
-<span style="color:#ff0;font-weight:bold">192.169</span>.<span style="color:#ff0;font-weight:bold">33.2</span>    mongo02
-<span style="color:#ff0;font-weight:bold">192.169</span>.<span style="color:#ff0;font-weight:bold">33.3</span>    mongo03</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ae81ff">192.169</span><span style="color:#f92672">.</span><span style="color:#ae81ff">33.1</span>    mongo01
+<span style="color:#ae81ff">192.169</span><span style="color:#f92672">.</span><span style="color:#ae81ff">33.2</span>    mongo02
+<span style="color:#ae81ff">192.169</span><span style="color:#f92672">.</span><span style="color:#ae81ff">33.3</span>    mongo03</code></pre></div>
 <p>Save the file. <code>ping</code> the VMs to ensure that you can reach one from the other. You can run <code>ping mongo02</code> from the <code>mongo01</code> VM. When you are certain the machines can find each other, we can now set up the replica set.</p>
 
 <h3 id="mongodb-replica-set">MongoDB Replica Set</h3>
@@ -166,158 +166,158 @@ add the following lines.</p>
 <h4 id="installing-mongodb-on-each-vm">Installing MongoDB on each VM</h4>
 
 <p>Run the following commands to install MongoDB 2.4.10. Do same for the other VMs.</p>
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#007f7f"># import the MongoDB public GPG Key</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># import the MongoDB public GPG Key</span>
 $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
 
-<span style="color:#007f7f"># Create a /etc/apt/sources.list.d/mongodb.list file</span>
-$ <span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#39;deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen&#39;</span> | sudo tee /etc/apt/sources.list.d/mongodb.list
+<span style="color:#75715e"># Create a /etc/apt/sources.list.d/mongodb.list file</span>
+$ echo <span style="color:#e6db74">&#39;deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen&#39;</span> | sudo tee /etc/apt/sources.list.d/mongodb.list
 
-<span style="color:#007f7f"># reload your repository</span>
+<span style="color:#75715e"># reload your repository</span>
 $ sudo apt-get update
 
-<span style="color:#007f7f"># Install MongoDB 2.4.10</span>
-$ sudo apt-get install mongodb-10gen=<span style="color:#ff0;font-weight:bold">2</span>.4.10</code></pre></div>
+<span style="color:#75715e"># Install MongoDB 2.4.10</span>
+$ sudo apt-get install mongodb-10gen<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>.4.10</code></pre></div>
 <h4 id="edit-configuration-file">Edit configuration file.</h4>
 
 <p>Now we need to make some changes to the configuration file. Open <code>/etc/mongodb.conf</code> and ensure that the following statements are uncommented. Add the ones that are not available like the line beginning with <code>keyFile</code>.</p>
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#007f7f"># Supports Authentication</span>
-auth = true
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Supports Authentication</span>
+auth <span style="color:#f92672">=</span> true
 
-dbpath=/var/lib/mongodb
-logpath=/var/log/mongodb/mongod.log
-logappend=true
+dbpath<span style="color:#f92672">=/</span>var<span style="color:#f92672">/</span>lib<span style="color:#f92672">/</span>mongodb
+logpath<span style="color:#f92672">=/</span>var<span style="color:#f92672">/</span>log<span style="color:#f92672">/</span>mongodb<span style="color:#f92672">/</span>mongod<span style="color:#f92672">.</span>log
+logappend<span style="color:#f92672">=</span>true
 
-<span style="color:#007f7f"># KeyFile for authenticating VMs in the replice set</span>
-keyFile=/var/lib/mongodb/keyFile
+<span style="color:#75715e"># KeyFile for authenticating VMs in the replice set</span>
+keyFile<span style="color:#f92672">=/</span>var<span style="color:#f92672">/</span>lib<span style="color:#f92672">/</span>mongodb<span style="color:#f92672">/</span>keyFile
 
-<span style="color:#007f7f"># Name of the repliceset. Set it to whatever you want. Must be the same for</span>
-<span style="color:#007f7f"># all the VMs in the repliceset.</span>
-replSet=demo</code></pre></div>
+<span style="color:#75715e"># Name of the repliceset. Set it to whatever you want. Must be the same for</span>
+<span style="color:#75715e"># all the VMs in the repliceset.</span>
+replSet<span style="color:#f92672">=</span>demo</code></pre></div>
 <p>The replica set will use the <code>keyFile</code> to authenticate the nodes in the set. Therefore any machine that will be part of this replica set must have a keyfile. We will now create the key file for one VM. As usual, do same for the other VMs in the set.</p>
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ <span style="color:#fff;font-weight:bold">echo</span> -n <span style="color:#0ff;font-weight:bold">&#34;MyReplicaSetKey&#34;</span> | md5sum|grep -o <span style="color:#0ff;font-weight:bold">&#34;[0-9a-z]\+&#34;</span> &gt; keyFile</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ echo -n <span style="color:#e6db74">&#34;MyReplicaSetKey&#34;</span> | md5sum|grep -o <span style="color:#e6db74">&#34;[0-9a-z]\+&#34;</span> &gt; keyFile</code></pre></div>
 <p>Now we need to change the ownership and permission modes of the file; as well as moving it to the path specified in the configuration file.</p>
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sudo cp keyFile /var/lib/mongodb
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sudo cp keyFile /var/lib/mongodb
 $ sudo chown mongodb:nogroup /var/lib/mongodb/keyFile
-$ sudo chmod <span style="color:#ff0;font-weight:bold">400</span> /var/lib/mongodb/keyFile</code></pre></div>
+$ sudo chmod <span style="color:#ae81ff">400</span> /var/lib/mongodb/keyFile</code></pre></div>
 <p>Next step, we need to create users in the DB for authentication and authorization. We need to first comment out the line beginning with <code>auth</code>. Because if authentication is enabled, we cannot even login to the DB since no user has been created yet.</p>
 
 <p>Restart the mongodb service to ensure that the new configuration takes hold.</p>
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sudo service mongodb restart</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sudo service mongodb restart</code></pre></div>
 <h4 id="create-super-admin">Create Super Admin</h4>
 
 <p>Here we will create an admin accounts; The admin will have thr following roles: <code>userAdminAnyDatabase</code>, <code>clusterAdmin</code>, <code>readWriteAnyDatabase</code>, <code>dbAdminAnyDatabase</code>. This will allow the admin to create other users, manage the replica sets etc.</p>
 
 <p>Choose any of the VMs as the primary node and connect to the MongoDB service running on it. The host and port are optional, unless your primary node exist on another machine.</p>
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ mongo [--host localhost --port <span style="color:#ff0;font-weight:bold">27017</span>]</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ mongo <span style="color:#f92672">[</span>--host localhost --port <span style="color:#ae81ff">27017</span><span style="color:#f92672">]</span></code></pre></div>
 <p>This should show the MongoDB shell prompt. Run the following commands to create the user.</p>
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#007f7f"># change to the admin database</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># change to the admin database</span>
 &gt; use admin
 
-<span style="color:#007f7f"># create a superuser with username and password as &#34;admin&#34; and can</span> 
-<span style="color:#007f7f"># administer any database.</span>
-&gt; db.addUser({
-    user: <span style="color:#0ff;font-weight:bold">&#34;admin&#34;</span>, pwd: <span style="color:#0ff;font-weight:bold">&#34;admin&#34;</span>,
-    roles: [ 
-        <span style="color:#0ff;font-weight:bold">&#34;readWriteAnyDatabase&#34;</span>
-        <span style="color:#0ff;font-weight:bold">&#34;userAdminAnyDatabase&#34;</span>,
-        <span style="color:#0ff;font-weight:bold">&#34;clusterAdmin&#34;</span>,
-        <span style="color:#0ff;font-weight:bold">&#34;dbAdminAnyDatabase&#34;</span> 
-    ]
-})</code></pre></div>
+<span style="color:#75715e"># create a superuser with username and password as &#34;admin&#34; and can</span> 
+<span style="color:#75715e"># administer any database.</span>
+&gt; db.addUser<span style="color:#f92672">({</span>
+    user: <span style="color:#e6db74">&#34;admin&#34;</span>, pwd: <span style="color:#e6db74">&#34;admin&#34;</span>,
+    roles: <span style="color:#f92672">[</span> 
+        <span style="color:#e6db74">&#34;readWriteAnyDatabase&#34;</span>
+        <span style="color:#e6db74">&#34;userAdminAnyDatabase&#34;</span>,
+        <span style="color:#e6db74">&#34;clusterAdmin&#34;</span>,
+        <span style="color:#e6db74">&#34;dbAdminAnyDatabase&#34;</span> 
+    <span style="color:#f92672">]</span>
+<span style="color:#f92672">})</span></code></pre></div>
 <p>Exit the shell. Go to the configuration file and uncomment the line beginning with <code>auth</code> (remember we commented it out before creating the users) and restart the MongoDB service. Make sure the other nodes have the same configuration as well. They should have <code>auth</code> enabled, have the same <code>replSet</code> name as the others and the <code>keyFile</code> path should be same. Restart the other MongoDB services as well.</p>
 
 <h4 id="add-nodes-to-the-replica-set">Add nodes to the replica set</h4>
 
 <p>Enter the mongodb shell again and authenticate with the username and password as &ldquo;admin&rdquo;.</p>
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f00">$</span> mongo
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#960050;background-color:#1e0010">$</span> mongo
 
-&gt; use admin
-&gt; db.auth(<span style="color:#0ff;font-weight:bold">&#34;admin&#34;</span>, <span style="color:#0ff;font-weight:bold">&#34;admin&#34;</span>)
-<span style="color:#ff0;font-weight:bold">1</span> <span style="color:#007f7f"># if successful and 0 otherwise</span></code></pre></div>
+<span style="color:#f92672">&gt;</span> use admin
+<span style="color:#f92672">&gt;</span> db<span style="color:#f92672">.</span>auth(<span style="color:#e6db74">&#34;admin&#34;</span>, <span style="color:#e6db74">&#34;admin&#34;</span>)
+<span style="color:#ae81ff">1</span> <span style="color:#75715e"># if successful and 0 otherwise</span></code></pre></div>
 <p>Then run the following commands to initiate the replica set and add nodes.</p>
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#007f7f"># Initiate replica set</span>
-&gt; use admin
-&gt; rs.initiate()
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Initiate replica set</span>
+<span style="color:#f92672">&gt;</span> use admin
+<span style="color:#f92672">&gt;</span> rs<span style="color:#f92672">.</span>initiate()
 
-<span style="color:#007f7f"># Verify the configuration</span>
-&gt; rs.conf()
+<span style="color:#75715e"># Verify the configuration</span>
+<span style="color:#f92672">&gt;</span> rs<span style="color:#f92672">.</span>conf()
 
-<span style="color:#007f7f"># Add mongo02 as a member or the replica set</span>
-&gt; rs.add(<span style="color:#0ff;font-weight:bold">&#34;mongo02:27017&#34;</span>)
+<span style="color:#75715e"># Add mongo02 as a member or the replica set</span>
+<span style="color:#f92672">&gt;</span> rs<span style="color:#f92672">.</span>add(<span style="color:#e6db74">&#34;mongo02:27017&#34;</span>)
 
-<span style="color:#007f7f"># Add mongo03 as a member or the replica set</span>
-&gt; rs.add(<span style="color:#0ff;font-weight:bold">&#34;mongo03:27017&#34;</span>)</code></pre></div>
+<span style="color:#75715e"># Add mongo03 as a member or the replica set</span>
+<span style="color:#f92672">&gt;</span> rs<span style="color:#f92672">.</span>add(<span style="color:#e6db74">&#34;mongo03:27017&#34;</span>)</code></pre></div>
 <p>Check the status of the replica set by running <code>rs.status()</code> which should return something similar to</p>
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">&gt; rs.status() 
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;</span> rs<span style="color:#f92672">.</span>status() 
 {
-	<span style="color:#0ff;font-weight:bold">&#34;set&#34;</span> : <span style="color:#0ff;font-weight:bold">&#34;demo&#34;</span>,
-	<span style="color:#0ff;font-weight:bold">&#34;date&#34;</span> : ISODate(<span style="color:#0ff;font-weight:bold">&#34;2014-10-28T23:12:29Z&#34;</span>),
-	<span style="color:#0ff;font-weight:bold">&#34;myState&#34;</span> : <span style="color:#ff0;font-weight:bold">1</span>,
-	<span style="color:#0ff;font-weight:bold">&#34;members&#34;</span> : [
+	<span style="color:#e6db74">&#34;set&#34;</span> : <span style="color:#e6db74">&#34;demo&#34;</span>,
+	<span style="color:#e6db74">&#34;date&#34;</span> : ISODate(<span style="color:#e6db74">&#34;2014-10-28T23:12:29Z&#34;</span>),
+	<span style="color:#e6db74">&#34;myState&#34;</span> : <span style="color:#ae81ff">1</span>,
+	<span style="color:#e6db74">&#34;members&#34;</span> : [
 		{
-			<span style="color:#0ff;font-weight:bold">&#34;_id&#34;</span> : <span style="color:#ff0;font-weight:bold">0</span>,
-			<span style="color:#0ff;font-weight:bold">&#34;name&#34;</span> : <span style="color:#0ff;font-weight:bold">&#34;mongo01:27017&#34;</span>,
-			<span style="color:#0ff;font-weight:bold">&#34;health&#34;</span> : <span style="color:#ff0;font-weight:bold">1</span>,
-			<span style="color:#0ff;font-weight:bold">&#34;state&#34;</span> : <span style="color:#ff0;font-weight:bold">1</span>,
-			<span style="color:#0ff;font-weight:bold">&#34;stateStr&#34;</span> : <span style="color:#0ff;font-weight:bold">&#34;PRIMARY&#34;</span>,
-			<span style="color:#0ff;font-weight:bold">&#34;optime&#34;</span> : {
-				<span style="color:#0ff;font-weight:bold">&#34;t&#34;</span> : <span style="color:#ff0;font-weight:bold">1414522392000</span>,
-				<span style="color:#0ff;font-weight:bold">&#34;i&#34;</span> : <span style="color:#ff0;font-weight:bold">1</span>
+			<span style="color:#e6db74">&#34;_id&#34;</span> : <span style="color:#ae81ff">0</span>,
+			<span style="color:#e6db74">&#34;name&#34;</span> : <span style="color:#e6db74">&#34;mongo01:27017&#34;</span>,
+			<span style="color:#e6db74">&#34;health&#34;</span> : <span style="color:#ae81ff">1</span>,
+			<span style="color:#e6db74">&#34;state&#34;</span> : <span style="color:#ae81ff">1</span>,
+			<span style="color:#e6db74">&#34;stateStr&#34;</span> : <span style="color:#e6db74">&#34;PRIMARY&#34;</span>,
+			<span style="color:#e6db74">&#34;optime&#34;</span> : {
+				<span style="color:#e6db74">&#34;t&#34;</span> : <span style="color:#ae81ff">1414522392000</span>,
+				<span style="color:#e6db74">&#34;i&#34;</span> : <span style="color:#ae81ff">1</span>
 			},
-			<span style="color:#0ff;font-weight:bold">&#34;optimeDate&#34;</span> : ISODate(<span style="color:#0ff;font-weight:bold">&#34;2014-10-28T18:53:12Z&#34;</span>),
-			<span style="color:#0ff;font-weight:bold">&#34;self&#34;</span> : true
+			<span style="color:#e6db74">&#34;optimeDate&#34;</span> : ISODate(<span style="color:#e6db74">&#34;2014-10-28T18:53:12Z&#34;</span>),
+			<span style="color:#e6db74">&#34;self&#34;</span> : true
 		},
 		{
-			<span style="color:#0ff;font-weight:bold">&#34;_id&#34;</span> : <span style="color:#ff0;font-weight:bold">1</span>,
-			<span style="color:#0ff;font-weight:bold">&#34;name&#34;</span> : <span style="color:#0ff;font-weight:bold">&#34;mongo02:27017&#34;</span>,
-			<span style="color:#0ff;font-weight:bold">&#34;health&#34;</span> : <span style="color:#ff0;font-weight:bold">1</span>,
-			<span style="color:#0ff;font-weight:bold">&#34;state&#34;</span> : <span style="color:#ff0;font-weight:bold">2</span>,
-			<span style="color:#0ff;font-weight:bold">&#34;stateStr&#34;</span> : <span style="color:#0ff;font-weight:bold">&#34;SECONDARY&#34;</span>,
-			<span style="color:#0ff;font-weight:bold">&#34;uptime&#34;</span> : <span style="color:#ff0;font-weight:bold">15754</span>,
-			<span style="color:#0ff;font-weight:bold">&#34;optime&#34;</span> : {
-				<span style="color:#0ff;font-weight:bold">&#34;t&#34;</span> : <span style="color:#ff0;font-weight:bold">1414522392000</span>,
-				<span style="color:#0ff;font-weight:bold">&#34;i&#34;</span> : <span style="color:#ff0;font-weight:bold">1</span>
+			<span style="color:#e6db74">&#34;_id&#34;</span> : <span style="color:#ae81ff">1</span>,
+			<span style="color:#e6db74">&#34;name&#34;</span> : <span style="color:#e6db74">&#34;mongo02:27017&#34;</span>,
+			<span style="color:#e6db74">&#34;health&#34;</span> : <span style="color:#ae81ff">1</span>,
+			<span style="color:#e6db74">&#34;state&#34;</span> : <span style="color:#ae81ff">2</span>,
+			<span style="color:#e6db74">&#34;stateStr&#34;</span> : <span style="color:#e6db74">&#34;SECONDARY&#34;</span>,
+			<span style="color:#e6db74">&#34;uptime&#34;</span> : <span style="color:#ae81ff">15754</span>,
+			<span style="color:#e6db74">&#34;optime&#34;</span> : {
+				<span style="color:#e6db74">&#34;t&#34;</span> : <span style="color:#ae81ff">1414522392000</span>,
+				<span style="color:#e6db74">&#34;i&#34;</span> : <span style="color:#ae81ff">1</span>
 			},
-			<span style="color:#0ff;font-weight:bold">&#34;optimeDate&#34;</span> : ISODate(<span style="color:#0ff;font-weight:bold">&#34;2014-10-28T18:53:12Z&#34;</span>),
-			<span style="color:#0ff;font-weight:bold">&#34;lastHeartbeat&#34;</span> : ISODate(<span style="color:#0ff;font-weight:bold">&#34;2014-10-28T23:12:29Z&#34;</span>),
-			<span style="color:#0ff;font-weight:bold">&#34;pingMs&#34;</span> : <span style="color:#ff0;font-weight:bold">0</span>
+			<span style="color:#e6db74">&#34;optimeDate&#34;</span> : ISODate(<span style="color:#e6db74">&#34;2014-10-28T18:53:12Z&#34;</span>),
+			<span style="color:#e6db74">&#34;lastHeartbeat&#34;</span> : ISODate(<span style="color:#e6db74">&#34;2014-10-28T23:12:29Z&#34;</span>),
+			<span style="color:#e6db74">&#34;pingMs&#34;</span> : <span style="color:#ae81ff">0</span>
 		},
 		{
-			<span style="color:#0ff;font-weight:bold">&#34;_id&#34;</span> : <span style="color:#ff0;font-weight:bold">2</span>,
-			<span style="color:#0ff;font-weight:bold">&#34;name&#34;</span> : <span style="color:#0ff;font-weight:bold">&#34;mongo03:27017&#34;</span>,
-			<span style="color:#0ff;font-weight:bold">&#34;health&#34;</span> : <span style="color:#ff0;font-weight:bold">1</span>,
-			<span style="color:#0ff;font-weight:bold">&#34;state&#34;</span> : <span style="color:#ff0;font-weight:bold">2</span>,
-			<span style="color:#0ff;font-weight:bold">&#34;stateStr&#34;</span> : <span style="color:#0ff;font-weight:bold">&#34;SECONDARY&#34;</span>,
-			<span style="color:#0ff;font-weight:bold">&#34;uptime&#34;</span> : <span style="color:#ff0;font-weight:bold">7953</span>,
-			<span style="color:#0ff;font-weight:bold">&#34;optime&#34;</span> : {
-				<span style="color:#0ff;font-weight:bold">&#34;t&#34;</span> : <span style="color:#ff0;font-weight:bold">1414522392000</span>,
-				<span style="color:#0ff;font-weight:bold">&#34;i&#34;</span> : <span style="color:#ff0;font-weight:bold">1</span>
+			<span style="color:#e6db74">&#34;_id&#34;</span> : <span style="color:#ae81ff">2</span>,
+			<span style="color:#e6db74">&#34;name&#34;</span> : <span style="color:#e6db74">&#34;mongo03:27017&#34;</span>,
+			<span style="color:#e6db74">&#34;health&#34;</span> : <span style="color:#ae81ff">1</span>,
+			<span style="color:#e6db74">&#34;state&#34;</span> : <span style="color:#ae81ff">2</span>,
+			<span style="color:#e6db74">&#34;stateStr&#34;</span> : <span style="color:#e6db74">&#34;SECONDARY&#34;</span>,
+			<span style="color:#e6db74">&#34;uptime&#34;</span> : <span style="color:#ae81ff">7953</span>,
+			<span style="color:#e6db74">&#34;optime&#34;</span> : {
+				<span style="color:#e6db74">&#34;t&#34;</span> : <span style="color:#ae81ff">1414522392000</span>,
+				<span style="color:#e6db74">&#34;i&#34;</span> : <span style="color:#ae81ff">1</span>
 			},
-			<span style="color:#0ff;font-weight:bold">&#34;optimeDate&#34;</span> : ISODate(<span style="color:#0ff;font-weight:bold">&#34;2014-10-28T18:53:12Z&#34;</span>),
-			<span style="color:#0ff;font-weight:bold">&#34;lastHeartbeat&#34;</span> : ISODate(<span style="color:#0ff;font-weight:bold">&#34;2014-10-28T23:12:27Z&#34;</span>),
-			<span style="color:#0ff;font-weight:bold">&#34;pingMs&#34;</span> : <span style="color:#ff0;font-weight:bold">0</span>
+			<span style="color:#e6db74">&#34;optimeDate&#34;</span> : ISODate(<span style="color:#e6db74">&#34;2014-10-28T18:53:12Z&#34;</span>),
+			<span style="color:#e6db74">&#34;lastHeartbeat&#34;</span> : ISODate(<span style="color:#e6db74">&#34;2014-10-28T23:12:27Z&#34;</span>),
+			<span style="color:#e6db74">&#34;pingMs&#34;</span> : <span style="color:#ae81ff">0</span>
 		}
 	],
-	<span style="color:#0ff;font-weight:bold">&#34;ok&#34;</span> : <span style="color:#ff0;font-weight:bold">1</span>
+	<span style="color:#e6db74">&#34;ok&#34;</span> : <span style="color:#ae81ff">1</span>
 }</code></pre></div>
 <h4 id="add-regular-users-to-specific-databases">Add regular users to specific databases</h4>
 
 <p>At this point, our replica set has been created. We can create a database and add a user to that database like so.</p>
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#007f7f"># create a database called books</span>
-&gt; use books
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># create a database called books</span>
+<span style="color:#f92672">&gt;</span> use books
 
-<span style="color:#007f7f"># Insert a record into the &#34;novels&#34; collection</span>
-&gt; db.novels.insert({<span style="color:#0ff;font-weight:bold">&#34;title&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;The Arrival&#34;</span>})
+<span style="color:#75715e"># Insert a record into the &#34;novels&#34; collection</span>
+<span style="color:#f92672">&gt;</span> db<span style="color:#f92672">.</span>novels<span style="color:#f92672">.</span>insert({<span style="color:#e6db74">&#34;title&#34;</span>: <span style="color:#e6db74">&#34;The Arrival&#34;</span>})
 
-<span style="color:#007f7f"># add user with read and write access to the &#34;books&#34; database</span>
-&gt; db.addUser({
-    user: <span style="color:#0ff;font-weight:bold">&#34;bob&#34;</span>, pwd: <span style="color:#0ff;font-weight:bold">&#34;bob&#34;</span>, 
-    roles: [<span style="color:#0ff;font-weight:bold">&#34;readWrite&#34;</span>]
+<span style="color:#75715e"># add user with read and write access to the &#34;books&#34; database</span>
+<span style="color:#f92672">&gt;</span> db<span style="color:#f92672">.</span>addUser({
+    user: <span style="color:#e6db74">&#34;bob&#34;</span>, pwd: <span style="color:#e6db74">&#34;bob&#34;</span>, 
+    roles: [<span style="color:#e6db74">&#34;readWrite&#34;</span>]
 })</code></pre></div>
 <p>Now the next time we try to access the <code>books</code> database, we have to authenticate. When we reconnect to the shell, the prompt will be the same as before. We can authenticate as the super admin and add users as well as manage the cluster set. When we authenticate, the shell prompt changes.</p>
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">&gt; use admin
-&gt; db.auth(<span style="color:#0ff;font-weight:bold">&#34;fred&#34;</span>, <span style="color:#0ff;font-weight:bold">&#34;fred&#34;</span>)
-<span style="color:#ff0;font-weight:bold">1</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">&gt; use admin
+&gt; db.auth<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;fred&#34;</span>, <span style="color:#e6db74">&#34;fred&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#ae81ff">1</span>
 demo:PRIMARY&gt; </code></pre></div>
 <p><code>demo</code> is the name used for the replica set and the <code>PRIMARY</code> indicate that this a primary node and the others will be <code>SECONDARY</code> nodes. We can now insert, update and delete in the <code>PRIMARY</code> node and it will be replicated in the <code>SECONDARY</code> nodes.</p>
 

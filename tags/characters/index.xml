@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Characters on Anabila</title>
+    <link>https://anthonyabeo.github.io/tags/characters/</link>
+    <description>Recent content in Characters on Anabila</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 17 Apr 2019 08:31:40 +0000</lastBuildDate>
+    
+	<atom:link href="https://anthonyabeo.github.io/tags/characters/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Some (useful) properties of ASCII characters</title>
+      <link>https://anthonyabeo.github.io/posts/useful-properties-of-ascii-characters/</link>
+      <pubDate>Wed, 17 Apr 2019 08:31:40 +0000</pubDate>
+      
+      <guid>https://anthonyabeo.github.io/posts/useful-properties-of-ascii-characters/</guid>
+      <description>When writing programs that deal with characters and strings, some of the methods programmers tend to use include, finding of a character is a digit or alphabet, convert a character from lowercase to uppercase or vice versa, etc. These functionalities come with almost all programming languages and in this article, we will be looking at properties of ASCII characters that make it easier to implement such functionality efficiently.
+Property I: Bit positions 5 and 6 determines the group a character belongs to.</description>
+    </item>
+    
+  </channel>
+</rss>

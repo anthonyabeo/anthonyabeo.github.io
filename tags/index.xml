@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Anabila</title>
@@ -6,13 +6,40 @@
     <description>Recent content in Tags on Anabila</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 17 Apr 2019 08:31:40 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 08 Jan 2020 09:34:12 +0000</lastBuildDate>
     
 	<atom:link href="https://anthonyabeo.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Ascii</title>
+      <title>characters</title>
+      <link>https://anthonyabeo.github.io/tags/characters/</link>
+      <pubDate>Wed, 08 Jan 2020 09:34:12 +0000</pubDate>
+      
+      <guid>https://anthonyabeo.github.io/tags/characters/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Unicode</title>
+      <link>https://anthonyabeo.github.io/tags/unicode/</link>
+      <pubDate>Wed, 08 Jan 2020 09:34:12 +0000</pubDate>
+      
+      <guid>https://anthonyabeo.github.io/tags/unicode/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>UTF-8</title>
+      <link>https://anthonyabeo.github.io/tags/utf-8/</link>
+      <pubDate>Wed, 08 Jan 2020 09:34:12 +0000</pubDate>
+      
+      <guid>https://anthonyabeo.github.io/tags/utf-8/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ASCII</title>
       <link>https://anthonyabeo.github.io/tags/ascii/</link>
       <pubDate>Wed, 17 Apr 2019 08:31:40 +0000</pubDate>
       
@@ -21,16 +48,7 @@
     </item>
     
     <item>
-      <title>Characters</title>
-      <link>https://anthonyabeo.github.io/tags/characters/</link>
-      <pubDate>Wed, 17 Apr 2019 08:31:40 +0000</pubDate>
-      
-      <guid>https://anthonyabeo.github.io/tags/characters/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Digital Circuits</title>
+      <title>digital circuits</title>
       <link>https://anthonyabeo.github.io/tags/digital-circuits/</link>
       <pubDate>Sun, 13 May 2018 16:39:54 +0000</pubDate>
       
@@ -39,7 +57,7 @@
     </item>
     
     <item>
-      <title>Logic</title>
+      <title>logic</title>
       <link>https://anthonyabeo.github.io/tags/logic/</link>
       <pubDate>Sun, 13 May 2018 16:39:54 +0000</pubDate>
       
@@ -48,7 +66,7 @@
     </item>
     
     <item>
-      <title>Memory</title>
+      <title>memory</title>
       <link>https://anthonyabeo.github.io/tags/memory/</link>
       <pubDate>Sun, 13 May 2018 16:39:54 +0000</pubDate>
       

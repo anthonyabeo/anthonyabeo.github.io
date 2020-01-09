@@ -18,7 +18,7 @@
       
       <guid>https://anthonyabeo.github.io/posts/unicode/</guid>
       <description>For an in-depth explanation of the intricacies of Unicode, you can consult the book, Unicode Explained or a host of other online resources. This post, however, is concerned with the UTF-8 encoding. In particular, it deals with encoding Unicode code points into UTF-8 byte streams and vice versa.
-Plain old ASCII maps each character to a single byte making it easier to parse. For instance the string &amp;ldquo;Hello&amp;rdquo; can be represented as[72, 101, 108, 108, 111] in bytes.</description>
+Plain old ASCII maps each character to a single byte, thereby making it easier to parse. For instance the string “Hello” can be represented as [72, 101, 108, 108, 111] in bytes.</description>
     </item>
     
     <item>

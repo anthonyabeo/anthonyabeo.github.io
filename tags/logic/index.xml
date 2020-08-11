@@ -2,21 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>logic on Anabila</title>
-    <link>https://anthonyabeo.github.io/tags/logic/</link>
+    <link>/tags/logic/</link>
     <description>Recent content in logic on Anabila</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
     <lastBuildDate>Sun, 13 May 2018 16:39:54 +0000</lastBuildDate>
     
-	<atom:link href="https://anthonyabeo.github.io/tags/logic/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/logic/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>The Circuitry of Computer Memory</title>
-      <link>https://anthonyabeo.github.io/posts/circuitry-of-computer-memory/</link>
+      <link>/posts/circuitry-of-computer-memory/</link>
       <pubDate>Sun, 13 May 2018 16:39:54 +0000</pubDate>
       
-      <guid>https://anthonyabeo.github.io/posts/circuitry-of-computer-memory/</guid>
+      <guid>/posts/circuitry-of-computer-memory/</guid>
       <description>BACKGROUND A computer is useful because it is a device that can not only execute instructions but can also store and retrieve information along the way to aid in the execution of such instructions. Like everything else in an electronic computer, the component that handles this functionality (the memory subsystem) is made up of electronic circuits. In this article, I will like to share a high-level overview of what this circuitry looks like and how it operates.</description>
     </item>
     

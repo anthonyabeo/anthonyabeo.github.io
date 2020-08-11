@@ -1,150 +1,221 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Programmaticalizing UTF-8 </title>
+  <meta name="description" content="Aspiring computer engineering researcher with an interest in Hardware Acceleration and Computer Architecture.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Programmaticalizing UTF-8" />
+<meta property="og:description" content="For an in-depth explanation of the intricacies of Unicode, you can consult the book, Unicode Explained or a host of other online resources. This post, however, is concerned with the UTF-8 encoding. In particular, it deals with encoding Unicode code points into UTF-8 byte streams and vice versa.
+Plain old ASCII maps each character to a single byte, thereby making it easier to parse. For instance the string “Hello” can be represented as [72, 101, 108, 108, 111] in bytes." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/unicode/" />
+<meta property="article:published_time" content="2020-01-08T09:34:12+00:00" />
+<meta property="article:modified_time" content="2020-01-08T09:34:12+00:00" />
 
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <meta name="author" content="Anabila">
-    <meta name="description" content="Den of Ideas">
-    <meta name="keywords" content="blog,developer,personal">
-
-    <meta name="twitter:card" content="summary"/>
+  <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Programmaticalizing UTF-8"/>
 <meta name="twitter:description" content="For an in-depth explanation of the intricacies of Unicode, you can consult the book, Unicode Explained or a host of other online resources. This post, however, is concerned with the UTF-8 encoding. In particular, it deals with encoding Unicode code points into UTF-8 byte streams and vice versa.
 Plain old ASCII maps each character to a single byte, thereby making it easier to parse. For instance the string “Hello” can be represented as [72, 101, 108, 108, 111] in bytes."/>
 
-    <meta property="og:title" content="Programmaticalizing UTF-8" />
-<meta property="og:description" content="For an in-depth explanation of the intricacies of Unicode, you can consult the book, Unicode Explained or a host of other online resources. This post, however, is concerned with the UTF-8 encoding. In particular, it deals with encoding Unicode code points into UTF-8 byte streams and vice versa.
-Plain old ASCII maps each character to a single byte, thereby making it easier to parse. For instance the string “Hello” can be represented as [72, 101, 108, 108, 111] in bytes." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://anthonyabeo.github.io/posts/unicode/" />
-<meta property="article:published_time" content="2020-01-08T09:34:12+00:00" />
-<meta property="article:modified_time" content="2020-01-08T09:34:12+00:00" />
-
-
+  
+  
     
-      <base href="https://anthonyabeo.github.io/posts/unicode/">
-    
-    <title>
-  Programmaticalizing UTF-8 · Anabila
-</title>
+  
+  
+  <link rel="stylesheet" href="css/style-dark.css">
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
 
-    
-      <link rel="canonical" href="https://anthonyabeo.github.io/posts/unicode/">
-    
+  
+<link rel="icon" type="image/png" href="images/favicon.ico" />
 
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" integrity="sha256-oSrCnRYXvHG31SBifqP2PM1uje7SJUyX0nTwO2RJV54=" crossorigin="anonymous" />
+  
+</head>
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
 
-    
+  <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/posts">All posts</a></li>
+         
+        <li><a href="/projects">Projects</a></li>
+         
+        <li><a href="/publications">Publications</a></li>
+         
+        <li><a href="/about">About</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li>
+          <a class="icon" href=" /posts/useful-properties-of-ascii-characters/">
+            <i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i>
+          </a>
+        </li>
+        
+        
+        <li>
+          <a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">
+            <i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i>
+          </a>
+        </li>
+        <li>
+          <a class="icon" href="#">
+            <i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i>
+          </a>
+        </li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
       
-      
-      <link rel="stylesheet" href="https://anthonyabeo.github.io/css/coder.min.28d751104f30c16da1aa1bb04015cbe662cacfe0d1b01af4f2240ad58580069c.css" integrity="sha256-KNdREE8wwW2hqhuwQBXL5mLKz&#43;DRsBr08iQK1YWABpw=" crossorigin="anonymous" media="screen" />
+      <ul>
+  
+  
     
-
-    
-
-    
-
-    
-      <link rel="stylesheet" href="https://anthonyabeo.github.io/css/custom.css">
-    
-
-    <link rel="icon" type="image/png" href="https://anthonyabeo.github.io/static/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="https://anthonyabeo.github.io/static/favicon-16x16.png" sizes="16x16">
-
-    <meta name="generator" content="Hugo 0.59.0" />
-  </head>
-
-  <body class=" ">
-    <main class="wrapper">
-      <nav class="navigation">
-  <section class="container">
-    <a class="navigation-title" href="https://anthonyabeo.github.io/">
-      Anabila
+  
+  
+  <li>
+    <a class="icon" href="http://www.facebook.com/sharer.php?u=%2fposts%2funicode%2f">
+      <i class="fab fa-facebook " aria-hidden="true"></i>
     </a>
-    <input type="checkbox" id="menu-toggle" />
-    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
-    <ul class="navigation-list">
-      
-        
-          <li class="navigation-item">
-            <a class="navigation-link" href="https://anthonyabeo.github.io/posts/">Blog</a>
-          </li>
-        
-          <li class="navigation-item">
-            <a class="navigation-link" href="https://anthonyabeo.github.io/about/">About</a>
-          </li>
-        
-          <li class="navigation-item">
-            <a class="navigation-link" href="https://anthonyabeo.github.io/projects/">Projects</a>
-          </li>
-        
-      
-      
-    </ul>
-  </section>
+  </li>
+  <li>
+    <a class="icon" href="https://twitter.com/share?url=%2fposts%2funicode%2f&text=Programmaticalizing%20UTF-8">
+      <i class="fab fa-twitter " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=%2fposts%2funicode%2f&title=Programmaticalizing%20UTF-8">
+      <i class="fab fa-linkedin " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=%2fposts%2funicode%2f&is_video=false&description=Programmaticalizing%20UTF-8">
+      <i class="fab fa-pinterest " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="mailto:?subject=Programmaticalizing%20UTF-8&body=Check out this article: %2fposts%2funicode%2f">
+      <i class="fas fa-envelope " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://getpocket.com/save?url=%2fposts%2funicode%2f&title=Programmaticalizing%20UTF-8">
+      <i class="fab fa-get-pocket " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://reddit.com/submit?url=%2fposts%2funicode%2f&title=Programmaticalizing%20UTF-8">
+      <i class="fab fa-reddit " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.stumbleupon.com/submit?url=%2fposts%2funicode%2f&title=Programmaticalizing%20UTF-8">
+      <i class="fab fa-stumbleupon " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://digg.com/submit?url=%2fposts%2funicode%2f&title=Programmaticalizing%20UTF-8">
+      <i class="fab fa-digg " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.tumblr.com/share/link?url=%2fposts%2funicode%2f&name=Programmaticalizing%20UTF-8&description=For%20an%20in-depth%20explanation%20of%20the%20intricacies%20of%20Unicode%2c%20you%20can%20consult%20the%20book%2c%20Unicode%20Explained%20or%20a%20host%20of%20other%20online%20resources.%20This%20post%2c%20however%2c%20is%20concerned%20with%20the%20UTF-8%20encoding.%20In%20particular%2c%20it%20deals%20with%20encoding%20Unicode%20code%20points%20into%20UTF-8%20byte%20streams%20and%20vice%20versa.%0aPlain%20old%20ASCII%20maps%20each%20character%20to%20a%20single%20byte%2c%20thereby%20making%20it%20easier%20to%20parse.%20For%20instance%20the%20string%20%e2%80%9cHello%e2%80%9d%20can%20be%20represented%20as%20%5b72%2c%20101%2c%20108%2c%20108%2c%20111%5d%20in%20bytes.">
+      <i class="fab fa-tumblr " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=%2fposts%2funicode%2f&t=Programmaticalizing%20UTF-8">
+      <i class="fab fa-hacker-news " aria-hidden="true"></i>
+    </a>
+  </li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#code-points">CODE POINTS</a></li>
+        <li><a href="#utf-8-encoding">UTF-8 ENCODING</a></li>
+        <li><a href="#conclusion">CONCLUSION</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
+    </div>
+  </span>
+</div>
 
 
-      <div class="content">
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+      <h1 class="posttitle" itemprop="name headline">
+        Programmaticalizing UTF-8
+      </h1>
+      <div class="meta">
         
-  <section class="container post">
-    <article>
-      <header>
-        <div class="post-title">
-          <h1 class="title">Programmaticalizing UTF-8</h1>
-        </div>
-        <div class="post-meta">
-          <div class="date">
-            <span class="posted-on">
-              <i class="fas fa-calendar"></i>
-              <time datetime='2020-01-08T09:34:12Z'>
-                January 8, 2020
-              </time>
-            </span>
-            <span class="reading-time">
-              <i class="fas fa-clock"></i>
-              8 minutes read
-            </span>
-          </div>
+        <div class="postdate">
           
-          <div class="tags">
-  <i class="fas fa-tag"></i>
-    <a href="https://anthonyabeo.github.io/tags/unicode/">Unicode</a>
-      <span class="separator">•</span>
-    <a href="https://anthonyabeo.github.io/tags/utf-8/">UTF-8</a>
-      <span class="separator">•</span>
-    <a href="https://anthonyabeo.github.io/tags/characters/">characters</a></div>
-
+          <time datetime="2020-01-08 09:34:12 &#43;0000 UTC" itemprop="datePublished">2020-01-08</time>
+          
         </div>
-      </header>
-
-      <div>
         
+        
+        <div class="article-tag">
+            <i class="fas fa-tag"></i>
+            
+            
+            <a class="tag-link" href="/tags/unicode" rel="tag">Unicode</a>
+            
+            
+            <a class="tag-link" href="/tags/utf-8" rel="tag">UTF-8</a>
+            
+             ,  
+            <a class="tag-link" href="/tags/characters" rel="tag">characters</a>
+            
+        </div> 
+        
+      </div>
+    </header>
 
-<p>For an in-depth explanation of the intricacies of Unicode, you can consult the book, Unicode Explained or a host of other online resources. This post, however, is concerned with the UTF-8 encoding. In particular, it deals with encoding Unicode code points into UTF-8 byte streams and vice versa.</p>
-
+  
+    <div class="content" itemprop="articleBody">
+      <p>For an in-depth explanation of the intricacies of Unicode, you can consult the book, Unicode Explained or a host of other online resources. This post, however, is concerned with the UTF-8 encoding. In particular, it deals with encoding Unicode code points into UTF-8 byte streams and vice versa.</p>
 <p>Plain old ASCII maps each character to a single byte, thereby making it easier to parse. For instance the string “Hello” can be represented as [72, 101, 108, 108, 111] in bytes. This, however, is not the case for the UTF-8 encoding; a Unicode character such as 😎 has a code point value of U+1F60E and requires up to 4 bytes to encode. Therefore if we have a string like “Hell😎o” with a byte representation of [72, 101, 108, 108, 240, 159, 152, 142, 111], the 😎 is represented as [240, 159, 152, 142]. Given a stream of bytes such as [72, 101, 108, 108, 240, 159, 152, 142, 111], how do you interpret it into the required character/string; likewise, how do you generate the correct byte stream given a Unicode character (code point). To understand this, let’s first look briefly at the notions of code points and their encoding with regards to Unicode.</p>
-
 <h3 id="code-points">CODE POINTS</h3>
-
 <p>In ASCII, the notion of a character is very clear. Each number from 0 to 127 is mapped to exactly one character e.g ‘A’ =&gt; 65 or ‘&lt;’ =&gt; 60. The Unicode standard has a similar notion called Code Points which are like the equivalent of characters in ASCII. Code Points are simply numbers that are mapped to the characters that are included in the Unicode standard e.g ‘A’ =&gt; 65, € =&gt; 8364, 😎 =&gt; 128526. You can think of this as the existence of a giant table that maps each number (code point) to an abstract character. Determining which character to add to the standard and its corresponding code point is the responsibility of the Unicode Consortium. Now that we have code points, we need to figure out how to encode them for use in computer systems. There are several encoding schemes but I would like to just focus on UTF-8.</p>
-
 <h3 id="utf-8-encoding">UTF-8 ENCODING</h3>
-
 <p>An ASCII character takes only one byte of space to represent a character. With Unicode, things are not so straightforward. Characters such as emojis, Chinese alphabets and others that fall outside the Latin Extended character set consume a varying number of bytes from 2 to up to 6. Therefore, looking back at the question posed earlier: Given a stream of bytes such as [72, 101, 108, 108, 240, 159, 152, 142, 111], how do you interpret it into the required character/string? We have a string of bytes that contain regular ASCII characters as well as some Non-ASCII characters; how do we make the distinction when parsing this string? The answer to this question in the diagram below:</p>
-
-<p><img src="https://anthonyabeo.github.io/images/unicode/utf8.png" alt="CASE 1" /></p>
-
+<p><img src="/images/unicode/utf8.png" alt="CASE 1"></p>
 <p>Any code point that falls between 0 and 127 (U+0000 and U+007F), i.e. the ASCII range will maintain its original value in ASCII. For the subsequent code points,(that require more than one byte), the first byte is called the leading byte and is used to determine how many bytes this character contains. E.g. A code point in the range U+0080 - U+07FF, the leading byte 110xxxxx contains two 1s in the first 3 bits meaning it requires 2 bytes for encoding. Likewise, code points in the range U+0800 - U+FFFF have a leading byte of 1110xxxx, meaning they consume 3 bytes. All the bytes following leading bytes are called data bytes and each starts with 10 in the first 2 bit positions. All the slots marked as ‘x’ are combined to form the actual code point of the character.</p>
-
 <h4 id="examples-72-101-226-152-158-108-108-240-159-152-142-111-206-163">EXAMPLES [72, 101, 226, 152, 158, 108, 108, 240, 159, 152, 142, 111, 206, 163]</h4>
-
 <p>The table below shows the bytes and their binary representations</p>
-
 <table>
 <thead>
 <tr>
@@ -152,109 +223,90 @@ Plain old ASCII maps each character to a single byte, thereby making it easier t
 <th align="center">Binary</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td align="left">72</td>
 <td align="center">01001000</td>
 </tr>
-
 <tr>
 <td align="left">101</td>
 <td align="center">01100101</td>
 </tr>
-
 <tr>
 <td align="left">226</td>
 <td align="center">11100010</td>
 </tr>
-
 <tr>
 <td align="left">152</td>
 <td align="center">10011000</td>
 </tr>
-
 <tr>
 <td align="left">158</td>
 <td align="center">10011110</td>
 </tr>
-
 <tr>
 <td align="left">108</td>
 <td align="center">01101100</td>
 </tr>
-
 <tr>
 <td align="left">108</td>
 <td align="center">01101100</td>
 </tr>
-
 <tr>
 <td align="left">240</td>
 <td align="center">11110000</td>
 </tr>
-
 <tr>
 <td align="left">159</td>
 <td align="center">10011111</td>
 </tr>
-
 <tr>
 <td align="left">152</td>
 <td align="center">10011000</td>
 </tr>
-
 <tr>
 <td align="left">142</td>
 <td align="center">10001110</td>
 </tr>
-
 <tr>
 <td align="left">111</td>
 <td align="center">01101111</td>
 </tr>
-
 <tr>
 <td align="left">206</td>
 <td align="center">11001110</td>
 </tr>
-
 <tr>
 <td align="left">163</td>
 <td align="center">10100011</td>
 </tr>
 </tbody>
 </table>
-
 <p>For the values 72, 101, 108, 108, we see that their binary representation starts with a 0. When compared to the UTF-8 encoding table above, they match the first group of code points, the same as with ASCII. The byte 240 begins 11110 which tells us that not only is this the leading byte of a Unicode code point, that this code point contains 4 bytes. Therefore, we need to extract the actual value of the code point like so:</p>
-
 <ol>
-<li><p>Separate the metadata (highlighted) part from the actual data.</p>
-
+<li>
+<p>Separate the metadata (highlighted) part from the actual data.</p>
 <ul>
-<li><code>11110</code>000    <code>10</code>011111    <code>10</code>011000    <code>10</code>001110
-<br /></li>
-</ul></li>
-
-<li><p>Merge all the data bits from the previous step like so:</p>
-
+<li><code>11110</code>000    <code>10</code>011111    <code>10</code>011000    <code>10</code>001110</li>
+</ul>
+</li>
+<li>
+<p>Merge all the data bits from the previous step like so:</p>
 <ul>
 <li>000 + 011111 + 011000 + 001110</li>
-</ul></li>
-
-<li><p>The actual Unicode code point is 000011111011000001110 or 128526 or U+1F60E representing the character, 😎.</p></li>
+</ul>
+</li>
+<li>
+<p>The actual Unicode code point is 000011111011000001110 or 128526 or U+1F60E representing the character, 😎.</p>
+</li>
 </ol>
-
 <p>Likewise, the byte 226 (11100010 in binary) having the form 1110xxxx indicates that it is a leading byte for a Unicode code point that consumes up to three bytes. We can extract the Unicode code point just like in the previous example:</p>
-
 <ol>
 <li><code>1110</code>0010    <code>10</code>011000    <code>10</code>011110</li>
 <li>0010 + 011000 + 011110</li>
 <li>0010011000011110 or U+261E representing ☞</li>
 </ol>
-
 <p>Given a stream of Unicode bytes like the example used here, we can parse it into the respective code points by inspecting each byte. If the value of a byte falls in the range 0 - 127, we know it is the equivalent of an ASCII character so we perform no further actions on it.</p>
-
 <p>If we encounter a byte whose value falls in the range 192 - 223, it belongs to the group with the form 110xxxxx. This is so because, since the first three bits are already allocated (i.e 110), the lowest number in this group will be one where all the x’s are zeros, 110-00000 (which is 192 in decimal). Likewise, the largest value in this group will be one where all the x’s have a value of 1, 110-11111 (which is 223 in decimal). We can apply that same logic to identify the leading bytes and which groups they belong to. Once we identify a leading byte, we can pick the corresponding number of data bytes it requires and using bit manipulation as shown in the program below, we can extract the Unicode code point.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-D" data-lang="D"><span style="color:#f92672">import</span> std.stdio
 <span style="color:#f92672">import</span> std.conv<span style="color:#f92672">;</span>
@@ -336,8 +388,7 @@ Plain old ASCII maps each character to a single byte, thereby making it easier t
 		<span style="color:#f92672">}</span>
 	<span style="color:#f92672">}</span>
 <span style="color:#f92672">}</span>
-</code></pre></div>
-<p>This yields the following output of the Unicode code points of the various character in the bytes stream;</p>
+</code></pre></div><p>This yields the following output of the Unicode code points of the various character in the bytes stream;</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">U+48     <span style="color:#f92672">=</span>&gt; H
 U+65     <span style="color:#f92672">=</span>&gt; e
 U+261E   <span style="color:#f92672">=</span>&gt; ☞
@@ -345,63 +396,168 @@ U+6C     <span style="color:#f92672">=</span>&gt; l
 U+6C     <span style="color:#f92672">=</span>&gt; l
 U+1F60E  <span style="color:#f92672">=</span>&gt; 😎
 U+6F     <span style="color:#f92672">=</span>&gt; o
-U+3A3    <span style="color:#f92672">=</span>&gt; Σ</code></pre></div>
-<h3 id="conclusion">CONCLUSION</h3>
-
+U+3A3    <span style="color:#f92672">=</span>&gt; Σ
+</code></pre></div><h3 id="conclusion">CONCLUSION</h3>
 <p>I looked at the distinction between ASCII and the UTF-8 encoding in terms of how characters are represented. I also looked at how to retrieve the Unicode code points from a stream of Unicode bytes as well as a program to parse such a byte stream. Any program that receives a bunch of bytes and is required to convert them to their corresponding characters such a web browser could implement something like this.</p>
-
 <p>The ability to distinguish between the leading and data bytes comes in handy because if we receive that transmission midway, we can check the bytes for a leading byte before we start processing the string to avoid any misinterpreted characters. One thing I did not cover is how to convert from a Unicode code point into a stream of bytes, say to send over the network. This involves extracting the appropriate data and appending it to the required headers to create the leading and data bytes..</p>
 
-      </div>
+    </div>
+  </article>
 
-      <footer>
+  
+  
+
+
+
+
+
+  <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/posts">All posts</a></li>
+         
+          <li><a href="/projects">Projects</a></li>
+         
+          <li><a href="/publications">Publications</a></li>
+         
+          <li><a href="/about">About</a></li>
         
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#code-points">CODE POINTS</a></li>
+        <li><a href="#utf-8-encoding">UTF-8 ENCODING</a></li>
+        <li><a href="#conclusion">CONCLUSION</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      
+      <ul>
+  
+  
+    
+  
+  
+  <li>
+    <a class="icon" href="http://www.facebook.com/sharer.php?u=%2fposts%2funicode%2f">
+      <i class="fab fa-facebook fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://twitter.com/share?url=%2fposts%2funicode%2f&text=Programmaticalizing%20UTF-8">
+      <i class="fab fa-twitter fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=%2fposts%2funicode%2f&title=Programmaticalizing%20UTF-8">
+      <i class="fab fa-linkedin fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=%2fposts%2funicode%2f&is_video=false&description=Programmaticalizing%20UTF-8">
+      <i class="fab fa-pinterest fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="mailto:?subject=Programmaticalizing%20UTF-8&body=Check out this article: %2fposts%2funicode%2f">
+      <i class="fas fa-envelope fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://getpocket.com/save?url=%2fposts%2funicode%2f&title=Programmaticalizing%20UTF-8">
+      <i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://reddit.com/submit?url=%2fposts%2funicode%2f&title=Programmaticalizing%20UTF-8">
+      <i class="fab fa-reddit fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.stumbleupon.com/submit?url=%2fposts%2funicode%2f&title=Programmaticalizing%20UTF-8">
+      <i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://digg.com/submit?url=%2fposts%2funicode%2f&title=Programmaticalizing%20UTF-8">
+      <i class="fab fa-digg fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.tumblr.com/share/link?url=%2fposts%2funicode%2f&name=Programmaticalizing%20UTF-8&description=For%20an%20in-depth%20explanation%20of%20the%20intricacies%20of%20Unicode%2c%20you%20can%20consult%20the%20book%2c%20Unicode%20Explained%20or%20a%20host%20of%20other%20online%20resources.%20This%20post%2c%20however%2c%20is%20concerned%20with%20the%20UTF-8%20encoding.%20In%20particular%2c%20it%20deals%20with%20encoding%20Unicode%20code%20points%20into%20UTF-8%20byte%20streams%20and%20vice%20versa.%0aPlain%20old%20ASCII%20maps%20each%20character%20to%20a%20single%20byte%2c%20thereby%20making%20it%20easier%20to%20parse.%20For%20instance%20the%20string%20%e2%80%9cHello%e2%80%9d%20can%20be%20represented%20as%20%5b72%2c%20101%2c%20108%2c%20108%2c%20111%5d%20in%20bytes.">
+      <i class="fab fa-tumblr fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=%2fposts%2funicode%2f&t=Programmaticalizing%20UTF-8">
+      <i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;">
+          <i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;">
+          <i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;">
+          <i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">
+          <i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
 
 
-        <div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "anthonyabeo-github-io" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-      </footer>
-    </article>
-
-    
-  </section>
-
-      </div>
-
-      <footer class="footer">
-  <section class="container">
-    
-     © 2020
-    
-       · 
-      Powered by <a href="https://gohugo.io/">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/">Coder</a>.
-    
-    
-  </section>
+  <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2020  Anabila 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/posts">All posts</a></li>
+         
+        <li><a href="/projects">Projects</a></li>
+         
+        <li><a href="/publications">Publications</a></li>
+         
+        <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
 </footer>
 
-    </main>
 
-    
+  </div>
+</body>
 
-  </body>
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/js/main.js"></script>
+
+
 
 </html>

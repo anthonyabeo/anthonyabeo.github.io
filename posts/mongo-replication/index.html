@@ -1,133 +1,208 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Setting Up MongoDB Replica Set On Ubuntu 12.04 </title>
+  <meta name="description" content="Aspiring computer engineering researcher with an interest in Hardware Acceleration and Computer Architecture.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Setting Up MongoDB Replica Set On Ubuntu 12.04" />
+<meta property="og:description" content="Introduction This is a tutorial detailing how to configure a MongoDB replica set. If you are reading this, we can assume you know what a replica set, why is is necessary and how it works. Otherwise you can checkout the MongoDB documentation for replica sets and clusters.
+In this tutorial, i will be using 3 Vagrant Ubuntu 12.04 boxes and MongoDB version 2.4.10. You should be comfortable spinning up vagrant boxes as this tutorial will not cover that." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/mongo-replication/" />
+<meta property="article:published_time" content="2018-11-20T15:36:33+00:00" />
+<meta property="article:modified_time" content="2018-11-20T15:36:33+00:00" />
 
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <meta name="author" content="Anabila">
-    <meta name="description" content="Den of Ideas">
-    <meta name="keywords" content="blog,developer,personal">
-
-    <meta name="twitter:card" content="summary"/>
+  <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Setting Up MongoDB Replica Set On Ubuntu 12.04"/>
 <meta name="twitter:description" content="Introduction This is a tutorial detailing how to configure a MongoDB replica set. If you are reading this, we can assume you know what a replica set, why is is necessary and how it works. Otherwise you can checkout the MongoDB documentation for replica sets and clusters.
 In this tutorial, i will be using 3 Vagrant Ubuntu 12.04 boxes and MongoDB version 2.4.10. You should be comfortable spinning up vagrant boxes as this tutorial will not cover that."/>
 
-    <meta property="og:title" content="Setting Up MongoDB Replica Set On Ubuntu 12.04" />
-<meta property="og:description" content="Introduction This is a tutorial detailing how to configure a MongoDB replica set. If you are reading this, we can assume you know what a replica set, why is is necessary and how it works. Otherwise you can checkout the MongoDB documentation for replica sets and clusters.
-In this tutorial, i will be using 3 Vagrant Ubuntu 12.04 boxes and MongoDB version 2.4.10. You should be comfortable spinning up vagrant boxes as this tutorial will not cover that." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://anthonyabeo.github.io/posts/mongo-replication/" />
-<meta property="article:published_time" content="2018-11-20T15:36:33+00:00" />
-<meta property="article:modified_time" content="2018-11-20T15:36:33+00:00" />
-
-
+  
+  
     
-      <base href="https://anthonyabeo.github.io/posts/mongo-replication/">
-    
-    <title>
-  Setting Up MongoDB Replica Set On Ubuntu 12.04 · Anabila
-</title>
+  
+  
+  <link rel="stylesheet" href="css/style-dark.css">
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
 
-    
-      <link rel="canonical" href="https://anthonyabeo.github.io/posts/mongo-replication/">
-    
+  
+<link rel="icon" type="image/png" href="images/favicon.ico" />
 
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" integrity="sha256-oSrCnRYXvHG31SBifqP2PM1uje7SJUyX0nTwO2RJV54=" crossorigin="anonymous" />
+  
+</head>
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
 
-    
+  <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/posts">All posts</a></li>
+         
+        <li><a href="/projects">Projects</a></li>
+         
+        <li><a href="/publications">Publications</a></li>
+         
+        <li><a href="/about">About</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li>
+          <a class="icon" href=" /posts/circuitry-of-computer-memory/">
+            <i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i>
+          </a>
+        </li>
+        
+        
+        <li>
+          <a class="icon" href="/posts/useful-properties-of-ascii-characters/">
+            <i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i>
+          </a>
+        </li>
+        
+        <li>
+          <a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">
+            <i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i>
+          </a>
+        </li>
+        <li>
+          <a class="icon" href="#">
+            <i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i>
+          </a>
+        </li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
       
-      
-      <link rel="stylesheet" href="https://anthonyabeo.github.io/css/coder.min.28d751104f30c16da1aa1bb04015cbe662cacfe0d1b01af4f2240ad58580069c.css" integrity="sha256-KNdREE8wwW2hqhuwQBXL5mLKz&#43;DRsBr08iQK1YWABpw=" crossorigin="anonymous" media="screen" />
+      <ul>
+  
+  
     
-
-    
-
-    
-
-    
-      <link rel="stylesheet" href="https://anthonyabeo.github.io/css/custom.css">
-    
-
-    <link rel="icon" type="image/png" href="https://anthonyabeo.github.io/static/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="https://anthonyabeo.github.io/static/favicon-16x16.png" sizes="16x16">
-
-    <meta name="generator" content="Hugo 0.59.0" />
-  </head>
-
-  <body class=" ">
-    <main class="wrapper">
-      <nav class="navigation">
-  <section class="container">
-    <a class="navigation-title" href="https://anthonyabeo.github.io/">
-      Anabila
+  
+  
+  <li>
+    <a class="icon" href="http://www.facebook.com/sharer.php?u=%2fposts%2fmongo-replication%2f">
+      <i class="fab fa-facebook " aria-hidden="true"></i>
     </a>
-    <input type="checkbox" id="menu-toggle" />
-    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
-    <ul class="navigation-list">
-      
-        
-          <li class="navigation-item">
-            <a class="navigation-link" href="https://anthonyabeo.github.io/posts/">Blog</a>
-          </li>
-        
-          <li class="navigation-item">
-            <a class="navigation-link" href="https://anthonyabeo.github.io/about/">About</a>
-          </li>
-        
-          <li class="navigation-item">
-            <a class="navigation-link" href="https://anthonyabeo.github.io/projects/">Projects</a>
-          </li>
-        
-      
-      
-    </ul>
-  </section>
+  </li>
+  <li>
+    <a class="icon" href="https://twitter.com/share?url=%2fposts%2fmongo-replication%2f&text=Setting%20Up%20MongoDB%20Replica%20Set%20On%20Ubuntu%2012.04">
+      <i class="fab fa-twitter " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=%2fposts%2fmongo-replication%2f&title=Setting%20Up%20MongoDB%20Replica%20Set%20On%20Ubuntu%2012.04">
+      <i class="fab fa-linkedin " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=%2fposts%2fmongo-replication%2f&is_video=false&description=Setting%20Up%20MongoDB%20Replica%20Set%20On%20Ubuntu%2012.04">
+      <i class="fab fa-pinterest " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="mailto:?subject=Setting%20Up%20MongoDB%20Replica%20Set%20On%20Ubuntu%2012.04&body=Check out this article: %2fposts%2fmongo-replication%2f">
+      <i class="fas fa-envelope " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://getpocket.com/save?url=%2fposts%2fmongo-replication%2f&title=Setting%20Up%20MongoDB%20Replica%20Set%20On%20Ubuntu%2012.04">
+      <i class="fab fa-get-pocket " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://reddit.com/submit?url=%2fposts%2fmongo-replication%2f&title=Setting%20Up%20MongoDB%20Replica%20Set%20On%20Ubuntu%2012.04">
+      <i class="fab fa-reddit " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.stumbleupon.com/submit?url=%2fposts%2fmongo-replication%2f&title=Setting%20Up%20MongoDB%20Replica%20Set%20On%20Ubuntu%2012.04">
+      <i class="fab fa-stumbleupon " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://digg.com/submit?url=%2fposts%2fmongo-replication%2f&title=Setting%20Up%20MongoDB%20Replica%20Set%20On%20Ubuntu%2012.04">
+      <i class="fab fa-digg " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.tumblr.com/share/link?url=%2fposts%2fmongo-replication%2f&name=Setting%20Up%20MongoDB%20Replica%20Set%20On%20Ubuntu%2012.04&description=Introduction%20This%20is%20a%20tutorial%20detailing%20how%20to%20configure%20a%20MongoDB%20replica%20set.%20If%20you%20are%20reading%20this%2c%20we%20can%20assume%20you%20know%20what%20a%20replica%20set%2c%20why%20is%20is%20necessary%20and%20how%20it%20works.%20Otherwise%20you%20can%20checkout%20the%20MongoDB%20documentation%20for%20replica%20sets%20and%20clusters.%0aIn%20this%20tutorial%2c%20i%20will%20be%20using%203%20Vagrant%20Ubuntu%2012.04%20boxes%20and%20MongoDB%20version%202.4.10.%20You%20should%20be%20comfortable%20spinning%20up%20vagrant%20boxes%20as%20this%20tutorial%20will%20not%20cover%20that.">
+      <i class="fab fa-tumblr " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=%2fposts%2fmongo-replication%2f&t=Setting%20Up%20MongoDB%20Replica%20Set%20On%20Ubuntu%2012.04">
+      <i class="fab fa-hacker-news " aria-hidden="true"></i>
+    </a>
+  </li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#introduction">Introduction</a></li>
+        <li><a href="#spin-up-the-three-vagrant-boxes">Spin up the three Vagrant boxes</a></li>
+        <li><a href="#mongodb-replica-set">MongoDB Replica Set</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
+    </div>
+  </span>
+</div>
 
 
-      <div class="content">
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+      <h1 class="posttitle" itemprop="name headline">
+        Setting Up MongoDB Replica Set On Ubuntu 12.04
+      </h1>
+      <div class="meta">
         
-  <section class="container post">
-    <article>
-      <header>
-        <div class="post-title">
-          <h1 class="title">Setting Up MongoDB Replica Set On Ubuntu 12.04</h1>
-        </div>
-        <div class="post-meta">
-          <div class="date">
-            <span class="posted-on">
-              <i class="fas fa-calendar"></i>
-              <time datetime='2018-11-20T15:36:33Z'>
-                November 20, 2018
-              </time>
-            </span>
-            <span class="reading-time">
-              <i class="fas fa-clock"></i>
-              6 minutes read
-            </span>
-          </div>
+        <div class="postdate">
           
+          <time datetime="2018-11-20 15:36:33 &#43;0000 UTC" itemprop="datePublished">2018-11-20</time>
           
         </div>
-      </header>
-
-      <div>
         
+        
+      </div>
+    </header>
 
-<h3 id="introduction">Introduction</h3>
-
+  
+    <div class="content" itemprop="articleBody">
+      <h3 id="introduction">Introduction</h3>
 <p>This is a tutorial detailing how to configure a MongoDB replica set. If you are reading this, we can assume you know what a replica set, why is is necessary and how it works. Otherwise you can checkout the MongoDB documentation for replica sets and clusters.</p>
-
 <p>In this tutorial, i will be using 3 Vagrant Ubuntu 12.04 boxes and MongoDB version 2.4.10. You should be comfortable spinning up vagrant boxes as this tutorial will not cover that. So let&rsquo;s get started.</p>
-
 <h3 id="spin-up-the-three-vagrant-boxes">Spin up the three Vagrant boxes</h3>
-
 <h4 id="configure-vagrant-vms">Configure Vagrant VMs</h4>
-
 <p>I am assuming you have downloaded the <code>ubuntu/precise64</code> 12.04 box locally. So run the following commands to create vagrant boxes.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># Create a directory for each VM.</span>
 $ mkdir -p mongo01
@@ -137,8 +212,8 @@ $ mkdir -p mongo03
 <span style="color:#75715e"># Create the Vagrant configuration files.</span>
 $ vagrant init ubuntu/precise64 --output mongo01/Vagrantfile
 $ vagrant init ubuntu/precise64 --output mongo02/Vagrantfile
-$ vagrant init ubuntu/precise64 --output mongo03/Vagrantfile</code></pre></div>
-<p>Next thing is to edit the Vagrantfile for each VM to have a specific hostname and IP address. Open each Vagrantfile and look for the lines that start with <code>config.vm.network</code>, uncomment it and assign it any IP address you want and add a line for the hostname as indicated below.</p>
+$ vagrant init ubuntu/precise64 --output mongo03/Vagrantfile
+</code></pre></div><p>Next thing is to edit the Vagrantfile for each VM to have a specific hostname and IP address. Open each Vagrantfile and look for the lines that start with <code>config.vm.network</code>, uncomment it and assign it any IP address you want and add a line for the hostname as indicated below.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># The IPs and the names are up to you.</span>
 
 <span style="color:#75715e"># mongo01</span>
@@ -151,20 +226,16 @@ config<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>
 
 <span style="color:#75715e"># mongo03</span>
 config<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>hostname <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;mongo03&#34;</span>
-config<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>network private_network, ip: <span style="color:#e6db74">&#34;192.168.33.3&#34;</span></code></pre></div>
-<h4 id="find-vms-by-hostname-or-dns">Find VMs by hostname or DNS</h4>
-
+config<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>network private_network, ip: <span style="color:#e6db74">&#34;192.168.33.3&#34;</span>
+</code></pre></div><h4 id="find-vms-by-hostname-or-dns">Find VMs by hostname or DNS</h4>
 <p>Now start the VMs with <code>vagrant up</code> and <code>ssh</code> into each with <code>vagrant ssh</code>. Now to avoid referring to each VM by the IP address, let&rsquo;s make sure we can refer to it by hostname or DNS by adding the IP addresses to the <code>/etc/hosts</code> files. Open this file in each VM and
 add the following lines.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ae81ff">192.169</span><span style="color:#f92672">.</span><span style="color:#ae81ff">33.1</span>    mongo01
 <span style="color:#ae81ff">192.169</span><span style="color:#f92672">.</span><span style="color:#ae81ff">33.2</span>    mongo02
-<span style="color:#ae81ff">192.169</span><span style="color:#f92672">.</span><span style="color:#ae81ff">33.3</span>    mongo03</code></pre></div>
-<p>Save the file. <code>ping</code> the VMs to ensure that you can reach one from the other. You can run <code>ping mongo02</code> from the <code>mongo01</code> VM. When you are certain the machines can find each other, we can now set up the replica set.</p>
-
+<span style="color:#ae81ff">192.169</span><span style="color:#f92672">.</span><span style="color:#ae81ff">33.3</span>    mongo03
+</code></pre></div><p>Save the file. <code>ping</code> the VMs to ensure that you can reach one from the other. You can run <code>ping mongo02</code> from the <code>mongo01</code> VM. When you are certain the machines can find each other, we can now set up the replica set.</p>
 <h3 id="mongodb-replica-set">MongoDB Replica Set</h3>
-
 <h4 id="installing-mongodb-on-each-vm">Installing MongoDB on each VM</h4>
-
 <p>Run the following commands to install MongoDB 2.4.10. Do same for the other VMs.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># import the MongoDB public GPG Key</span>
 $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
@@ -176,9 +247,8 @@ $ echo <span style="color:#e6db74">&#39;deb http://downloads-distro.mongodb.org/
 $ sudo apt-get update
 
 <span style="color:#75715e"># Install MongoDB 2.4.10</span>
-$ sudo apt-get install mongodb-10gen<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>.4.10</code></pre></div>
-<h4 id="edit-configuration-file">Edit configuration file.</h4>
-
+$ sudo apt-get install mongodb-10gen<span style="color:#f92672">=</span>2.4.10
+</code></pre></div><h4 id="edit-configuration-file">Edit configuration file.</h4>
 <p>Now we need to make some changes to the configuration file. Open <code>/etc/mongodb.conf</code> and ensure that the following statements are uncommented. Add the ones that are not available like the line beginning with <code>keyFile</code>.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Supports Authentication</span>
 auth <span style="color:#f92672">=</span> true
@@ -192,24 +262,21 @@ keyFile<span style="color:#f92672">=/</span>var<span style="color:#f92672">/</sp
 
 <span style="color:#75715e"># Name of the repliceset. Set it to whatever you want. Must be the same for</span>
 <span style="color:#75715e"># all the VMs in the repliceset.</span>
-replSet<span style="color:#f92672">=</span>demo</code></pre></div>
-<p>The replica set will use the <code>keyFile</code> to authenticate the nodes in the set. Therefore any machine that will be part of this replica set must have a keyfile. We will now create the key file for one VM. As usual, do same for the other VMs in the set.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ echo -n <span style="color:#e6db74">&#34;MyReplicaSetKey&#34;</span> | md5sum|grep -o <span style="color:#e6db74">&#34;[0-9a-z]\+&#34;</span> &gt; keyFile</code></pre></div>
-<p>Now we need to change the ownership and permission modes of the file; as well as moving it to the path specified in the configuration file.</p>
+replSet<span style="color:#f92672">=</span>demo
+</code></pre></div><p>The replica set will use the <code>keyFile</code> to authenticate the nodes in the set. Therefore any machine that will be part of this replica set must have a keyfile. We will now create the key file for one VM. As usual, do same for the other VMs in the set.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ echo -n <span style="color:#e6db74">&#34;MyReplicaSetKey&#34;</span> | md5sum|grep -o <span style="color:#e6db74">&#34;[0-9a-z]\+&#34;</span> &gt; keyFile
+</code></pre></div><p>Now we need to change the ownership and permission modes of the file; as well as moving it to the path specified in the configuration file.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sudo cp keyFile /var/lib/mongodb
 $ sudo chown mongodb:nogroup /var/lib/mongodb/keyFile
-$ sudo chmod <span style="color:#ae81ff">400</span> /var/lib/mongodb/keyFile</code></pre></div>
-<p>Next step, we need to create users in the DB for authentication and authorization. We need to first comment out the line beginning with <code>auth</code>. Because if authentication is enabled, we cannot even login to the DB since no user has been created yet.</p>
-
+$ sudo chmod <span style="color:#ae81ff">400</span> /var/lib/mongodb/keyFile
+</code></pre></div><p>Next step, we need to create users in the DB for authentication and authorization. We need to first comment out the line beginning with <code>auth</code>. Because if authentication is enabled, we cannot even login to the DB since no user has been created yet.</p>
 <p>Restart the mongodb service to ensure that the new configuration takes hold.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sudo service mongodb restart</code></pre></div>
-<h4 id="create-super-admin">Create Super Admin</h4>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sudo service mongodb restart
+</code></pre></div><h4 id="create-super-admin">Create Super Admin</h4>
 <p>Here we will create an admin accounts; The admin will have thr following roles: <code>userAdminAnyDatabase</code>, <code>clusterAdmin</code>, <code>readWriteAnyDatabase</code>, <code>dbAdminAnyDatabase</code>. This will allow the admin to create other users, manage the replica sets etc.</p>
-
 <p>Choose any of the VMs as the primary node and connect to the MongoDB service running on it. The host and port are optional, unless your primary node exist on another machine.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ mongo <span style="color:#f92672">[</span>--host localhost --port <span style="color:#ae81ff">27017</span><span style="color:#f92672">]</span></code></pre></div>
-<p>This should show the MongoDB shell prompt. Run the following commands to create the user.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ mongo <span style="color:#f92672">[</span>--host localhost --port 27017<span style="color:#f92672">]</span>
+</code></pre></div><p>This should show the MongoDB shell prompt. Run the following commands to create the user.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># change to the admin database</span>
 &gt; use admin
 
@@ -223,18 +290,16 @@ $ sudo chmod <span style="color:#ae81ff">400</span> /var/lib/mongodb/keyFile</co
         <span style="color:#e6db74">&#34;clusterAdmin&#34;</span>,
         <span style="color:#e6db74">&#34;dbAdminAnyDatabase&#34;</span> 
     <span style="color:#f92672">]</span>
-<span style="color:#f92672">})</span></code></pre></div>
-<p>Exit the shell. Go to the configuration file and uncomment the line beginning with <code>auth</code> (remember we commented it out before creating the users) and restart the MongoDB service. Make sure the other nodes have the same configuration as well. They should have <code>auth</code> enabled, have the same <code>replSet</code> name as the others and the <code>keyFile</code> path should be same. Restart the other MongoDB services as well.</p>
-
+<span style="color:#f92672">})</span>
+</code></pre></div><p>Exit the shell. Go to the configuration file and uncomment the line beginning with <code>auth</code> (remember we commented it out before creating the users) and restart the MongoDB service. Make sure the other nodes have the same configuration as well. They should have <code>auth</code> enabled, have the same <code>replSet</code> name as the others and the <code>keyFile</code> path should be same. Restart the other MongoDB services as well.</p>
 <h4 id="add-nodes-to-the-replica-set">Add nodes to the replica set</h4>
-
 <p>Enter the mongodb shell again and authenticate with the username and password as &ldquo;admin&rdquo;.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#960050;background-color:#1e0010">$</span> mongo
 
 <span style="color:#f92672">&gt;</span> use admin
 <span style="color:#f92672">&gt;</span> db<span style="color:#f92672">.</span>auth(<span style="color:#e6db74">&#34;admin&#34;</span>, <span style="color:#e6db74">&#34;admin&#34;</span>)
-<span style="color:#ae81ff">1</span> <span style="color:#75715e"># if successful and 0 otherwise</span></code></pre></div>
-<p>Then run the following commands to initiate the replica set and add nodes.</p>
+<span style="color:#ae81ff">1</span> <span style="color:#75715e"># if successful and 0 otherwise</span>
+</code></pre></div><p>Then run the following commands to initiate the replica set and add nodes.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Initiate replica set</span>
 <span style="color:#f92672">&gt;</span> use admin
 <span style="color:#f92672">&gt;</span> rs<span style="color:#f92672">.</span>initiate()
@@ -246,8 +311,8 @@ $ sudo chmod <span style="color:#ae81ff">400</span> /var/lib/mongodb/keyFile</co
 <span style="color:#f92672">&gt;</span> rs<span style="color:#f92672">.</span>add(<span style="color:#e6db74">&#34;mongo02:27017&#34;</span>)
 
 <span style="color:#75715e"># Add mongo03 as a member or the replica set</span>
-<span style="color:#f92672">&gt;</span> rs<span style="color:#f92672">.</span>add(<span style="color:#e6db74">&#34;mongo03:27017&#34;</span>)</code></pre></div>
-<p>Check the status of the replica set by running <code>rs.status()</code> which should return something similar to</p>
+<span style="color:#f92672">&gt;</span> rs<span style="color:#f92672">.</span>add(<span style="color:#e6db74">&#34;mongo03:27017&#34;</span>)
+</code></pre></div><p>Check the status of the replica set by running <code>rs.status()</code> which should return something similar to</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;</span> rs<span style="color:#f92672">.</span>status() 
 {
 	<span style="color:#e6db74">&#34;set&#34;</span> : <span style="color:#e6db74">&#34;demo&#34;</span>,
@@ -299,9 +364,8 @@ $ sudo chmod <span style="color:#ae81ff">400</span> /var/lib/mongodb/keyFile</co
 		}
 	],
 	<span style="color:#e6db74">&#34;ok&#34;</span> : <span style="color:#ae81ff">1</span>
-}</code></pre></div>
-<h4 id="add-regular-users-to-specific-databases">Add regular users to specific databases</h4>
-
+}
+</code></pre></div><h4 id="add-regular-users-to-specific-databases">Add regular users to specific databases</h4>
 <p>At this point, our replica set has been created. We can create a database and add a user to that database like so.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># create a database called books</span>
 <span style="color:#f92672">&gt;</span> use books
@@ -313,64 +377,171 @@ $ sudo chmod <span style="color:#ae81ff">400</span> /var/lib/mongodb/keyFile</co
 <span style="color:#f92672">&gt;</span> db<span style="color:#f92672">.</span>addUser({
     user: <span style="color:#e6db74">&#34;bob&#34;</span>, pwd: <span style="color:#e6db74">&#34;bob&#34;</span>, 
     roles: [<span style="color:#e6db74">&#34;readWrite&#34;</span>]
-})</code></pre></div>
-<p>Now the next time we try to access the <code>books</code> database, we have to authenticate. When we reconnect to the shell, the prompt will be the same as before. We can authenticate as the super admin and add users as well as manage the cluster set. When we authenticate, the shell prompt changes.</p>
+})
+</code></pre></div><p>Now the next time we try to access the <code>books</code> database, we have to authenticate. When we reconnect to the shell, the prompt will be the same as before. We can authenticate as the super admin and add users as well as manage the cluster set. When we authenticate, the shell prompt changes.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">&gt; use admin
 &gt; db.auth<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;fred&#34;</span>, <span style="color:#e6db74">&#34;fred&#34;</span><span style="color:#f92672">)</span>
 <span style="color:#ae81ff">1</span>
-demo:PRIMARY&gt; </code></pre></div>
-<p><code>demo</code> is the name used for the replica set and the <code>PRIMARY</code> indicate that this a primary node and the others will be <code>SECONDARY</code> nodes. We can now insert, update and delete in the <code>PRIMARY</code> node and it will be replicated in the <code>SECONDARY</code> nodes.</p>
+demo:PRIMARY&gt; 
+</code></pre></div><p><code>demo</code> is the name used for the replica set and the <code>PRIMARY</code> indicate that this a primary node and the others will be <code>SECONDARY</code> nodes. We can now insert, update and delete in the <code>PRIMARY</code> node and it will be replicated in the <code>SECONDARY</code> nodes.</p>
 
-      </div>
+    </div>
+  </article>
 
-      <footer>
+  
+  
+
+
+
+
+
+  <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/posts">All posts</a></li>
+         
+          <li><a href="/projects">Projects</a></li>
+         
+          <li><a href="/publications">Publications</a></li>
+         
+          <li><a href="/about">About</a></li>
         
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#introduction">Introduction</a></li>
+        <li><a href="#spin-up-the-three-vagrant-boxes">Spin up the three Vagrant boxes</a></li>
+        <li><a href="#mongodb-replica-set">MongoDB Replica Set</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      
+      <ul>
+  
+  
+    
+  
+  
+  <li>
+    <a class="icon" href="http://www.facebook.com/sharer.php?u=%2fposts%2fmongo-replication%2f">
+      <i class="fab fa-facebook fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://twitter.com/share?url=%2fposts%2fmongo-replication%2f&text=Setting%20Up%20MongoDB%20Replica%20Set%20On%20Ubuntu%2012.04">
+      <i class="fab fa-twitter fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=%2fposts%2fmongo-replication%2f&title=Setting%20Up%20MongoDB%20Replica%20Set%20On%20Ubuntu%2012.04">
+      <i class="fab fa-linkedin fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=%2fposts%2fmongo-replication%2f&is_video=false&description=Setting%20Up%20MongoDB%20Replica%20Set%20On%20Ubuntu%2012.04">
+      <i class="fab fa-pinterest fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="mailto:?subject=Setting%20Up%20MongoDB%20Replica%20Set%20On%20Ubuntu%2012.04&body=Check out this article: %2fposts%2fmongo-replication%2f">
+      <i class="fas fa-envelope fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://getpocket.com/save?url=%2fposts%2fmongo-replication%2f&title=Setting%20Up%20MongoDB%20Replica%20Set%20On%20Ubuntu%2012.04">
+      <i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://reddit.com/submit?url=%2fposts%2fmongo-replication%2f&title=Setting%20Up%20MongoDB%20Replica%20Set%20On%20Ubuntu%2012.04">
+      <i class="fab fa-reddit fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.stumbleupon.com/submit?url=%2fposts%2fmongo-replication%2f&title=Setting%20Up%20MongoDB%20Replica%20Set%20On%20Ubuntu%2012.04">
+      <i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://digg.com/submit?url=%2fposts%2fmongo-replication%2f&title=Setting%20Up%20MongoDB%20Replica%20Set%20On%20Ubuntu%2012.04">
+      <i class="fab fa-digg fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.tumblr.com/share/link?url=%2fposts%2fmongo-replication%2f&name=Setting%20Up%20MongoDB%20Replica%20Set%20On%20Ubuntu%2012.04&description=Introduction%20This%20is%20a%20tutorial%20detailing%20how%20to%20configure%20a%20MongoDB%20replica%20set.%20If%20you%20are%20reading%20this%2c%20we%20can%20assume%20you%20know%20what%20a%20replica%20set%2c%20why%20is%20is%20necessary%20and%20how%20it%20works.%20Otherwise%20you%20can%20checkout%20the%20MongoDB%20documentation%20for%20replica%20sets%20and%20clusters.%0aIn%20this%20tutorial%2c%20i%20will%20be%20using%203%20Vagrant%20Ubuntu%2012.04%20boxes%20and%20MongoDB%20version%202.4.10.%20You%20should%20be%20comfortable%20spinning%20up%20vagrant%20boxes%20as%20this%20tutorial%20will%20not%20cover%20that.">
+      <i class="fab fa-tumblr fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=%2fposts%2fmongo-replication%2f&t=Setting%20Up%20MongoDB%20Replica%20Set%20On%20Ubuntu%2012.04">
+      <i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;">
+          <i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;">
+          <i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;">
+          <i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">
+          <i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
 
 
-        <div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "anthonyabeo-github-io" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-      </footer>
-    </article>
-
-    
-  </section>
-
-      </div>
-
-      <footer class="footer">
-  <section class="container">
-    
-     © 2020
-    
-       · 
-      Powered by <a href="https://gohugo.io/">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/">Coder</a>.
-    
-    
-  </section>
+  <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2020  Anabila 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/posts">All posts</a></li>
+         
+        <li><a href="/projects">Projects</a></li>
+         
+        <li><a href="/publications">Publications</a></li>
+         
+        <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
 </footer>
 
-    </main>
 
-    
+  </div>
+</body>
 
-  </body>
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/js/main.js"></script>
+
+
 
 </html>

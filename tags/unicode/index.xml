@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Unicode on Anabila</title>
-    <link>/tags/unicode/</link>
+    <link>https://anthonyabeo.github.io/tags/unicode/</link>
     <description>Recent content in Unicode on Anabila</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Wed, 08 Jan 2020 09:34:12 +0000</lastBuildDate>
     
-	<atom:link href="/tags/unicode/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://anthonyabeo.github.io/tags/unicode/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Programmaticalizing UTF-8</title>
-      <link>/posts/unicode/</link>
+      <link>https://anthonyabeo.github.io/posts/unicode/</link>
       <pubDate>Wed, 08 Jan 2020 09:34:12 +0000</pubDate>
       
-      <guid>/posts/unicode/</guid>
+      <guid>https://anthonyabeo.github.io/posts/unicode/</guid>
       <description>For an in-depth explanation of the intricacies of Unicode, you can consult the book, Unicode Explained or a host of other online resources. This post, however, is concerned with the UTF-8 encoding. In particular, it deals with encoding Unicode code points into UTF-8 byte streams and vice versa.
 Plain old ASCII maps each character to a single byte, thereby making it easier to parse. For instance the string “Hello” can be represented as [72, 101, 108, 108, 111] in bytes.</description>
     </item>

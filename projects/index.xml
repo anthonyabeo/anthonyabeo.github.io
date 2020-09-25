@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Projects on Anabila</title>
+    <link>https://anthonyabeo.github.io/projects/</link>
+    <description>Recent content in Projects on Anabila</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 25 Sep 2020 10:25:33 +0000</lastBuildDate>
+    
+	<atom:link href="https://anthonyabeo.github.io/projects/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>FPGA hardware linear regression implementation using fixed-point arithmetic</title>
+      <link>https://anthonyabeo.github.io/projects/linear_regression_accelerator/</link>
+      <pubDate>Fri, 25 Sep 2020 10:25:33 +0000</pubDate>
+      
+      <guid>https://anthonyabeo.github.io/projects/linear_regression_accelerator/</guid>
+      <description>ABSTRACT In this paper, a hardware design based on the field programmable gate array (FPGA) to implement a linear regression algorithm is presented. The arithmetic operations were optimized by applying a fixed-point number representation for all hardware based computations. A floating-point number training data point was initially created and stored in a personal computer (PC) which was then converted to fixed-point representation and transmitted to the FPGA via a serial communication link.</description>
+    </item>
+    
+  </channel>
+</rss>

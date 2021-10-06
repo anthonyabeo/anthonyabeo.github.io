@@ -16,7 +16,7 @@
       <pubDate>Mon, 27 Sep 2021 13:44:57 +0000</pubDate>
       
       <guid>https://anthonyabeo.github.io/posts/go-rpc/</guid>
-      <description>Introduction These days most networked applications are designed a logical, self-contained, unifunctional services. Each service communicates with other services to perform some actions such as completing user requests. For example, a notification service may contact a user management service to verify the authenticity of the user. Such inter-service communication requires communication protocal such as REST and GraphQL. In this post, I want to briefly introduce another method called Remote Procedure Calls (RPC).</description>
+      <description>Introduction These days most networked applications are designed as logical, self-contained, unifunctional services. Each service communicates with other services to complete some user request. For example, a notification service may contact a user management service to acquire a user&amp;rsquo;s credentials before sending a notification. Such inter-service communication requires a communication protocol such as REST and GraphQL. In this post, I want to briefly introduce another method called Remote Procedure Calls (RPC).</description>
     </item>
     
   </channel>

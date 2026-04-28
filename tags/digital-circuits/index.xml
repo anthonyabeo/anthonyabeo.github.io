@@ -1,23 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>digital circuits on Anabila</title>
+    <title>Digital Circuits on Trunk Whorl</title>
     <link>https://anthonyabeo.github.io/tags/digital-circuits/</link>
-    <description>Recent content in digital circuits on Anabila</description>
-    <image>
-      <url>https://anthonyabeo.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
-      <link>https://anthonyabeo.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
-    </image>
-    <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sun, 13 May 2018 16:39:54 +0000</lastBuildDate><atom:link href="https://anthonyabeo.github.io/tags/digital-circuits/index.xml" rel="self" type="application/rss+xml" />
+    <description>Recent content in Digital Circuits on Trunk Whorl</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 13 May 2018 16:39:54 +0000</lastBuildDate>
+    <atom:link href="https://anthonyabeo.github.io/tags/digital-circuits/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>The Circuitry of Computer Memory</title>
       <link>https://anthonyabeo.github.io/posts/circuitry-of-computer-memory/</link>
       <pubDate>Sun, 13 May 2018 16:39:54 +0000</pubDate>
-      
       <guid>https://anthonyabeo.github.io/posts/circuitry-of-computer-memory/</guid>
-      <description>BACKGROUND A computer is useful because it is a device that can not only execute instructions but can also store and retrieve information along the way to aid in the execution of such instructions. Like everything else in an electronic computer, the component that handles this functionality (the memory subsystem) is made up of electronic circuits. In this article, I will like to share a high-level overview of what this circuitry looks like and how it operates.</description>
+      <description>&lt;h3 id=&#34;background&#34;&gt;BACKGROUND&lt;/h3&gt;
+&lt;p&gt;A computer is useful because it is a device that can not only execute instructions but can also store and retrieve information along the way to aid in the execution of such instructions. Like everything else in an electronic computer, the component that handles this functionality (the memory subsystem) is made up of electronic circuits. In this article, I will like to share a high-level overview of what this circuitry looks like and how it operates. Electronic circuits are built from basic elements called &lt;strong&gt;logic gates&lt;/strong&gt; (AND, OR, NAND, etc). It is advisable that the reader know these basic elements and understands how they operate as this will make it easier to follow along with the material. This Wikipedia &lt;a href=&#34;https://en.wikipedia.org/wiki/Logic_gate&#34;&gt;article&lt;/a&gt; is a start.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

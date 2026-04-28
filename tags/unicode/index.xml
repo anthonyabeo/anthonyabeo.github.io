@@ -1,24 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Unicode on Anabila</title>
+    <title>Unicode on Trunk Whorl</title>
     <link>https://anthonyabeo.github.io/tags/unicode/</link>
-    <description>Recent content in Unicode on Anabila</description>
-    <image>
-      <url>https://anthonyabeo.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
-      <link>https://anthonyabeo.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
-    </image>
-    <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 08 Jan 2020 09:34:12 +0000</lastBuildDate><atom:link href="https://anthonyabeo.github.io/tags/unicode/index.xml" rel="self" type="application/rss+xml" />
+    <description>Recent content in Unicode on Trunk Whorl</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 08 Jan 2020 09:34:12 +0000</lastBuildDate>
+    <atom:link href="https://anthonyabeo.github.io/tags/unicode/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Programmaticalizing UTF-8</title>
       <link>https://anthonyabeo.github.io/posts/unicode/</link>
       <pubDate>Wed, 08 Jan 2020 09:34:12 +0000</pubDate>
-      
       <guid>https://anthonyabeo.github.io/posts/unicode/</guid>
-      <description>For an in-depth explanation of the intricacies of Unicode, you can consult the book, Unicode Explained or a host of other online resources. This post, however, is concerned with the UTF-8 encoding. In particular, it deals with encoding Unicode code points into UTF-8 byte streams and vice versa.
-Plain old ASCII maps each character to a single byte, thereby making it easier to parse. For instance the string “Hello” can be represented as [72, 101, 108, 108, 111] in bytes.</description>
+      <description>&lt;p&gt;For an in-depth explanation of the intricacies of Unicode, you can consult the book, Unicode Explained or a host of other online resources. This post, however, is concerned with the UTF-8 encoding. In particular, it deals with encoding Unicode code points into UTF-8 byte streams and vice versa.&lt;/p&gt;
+&lt;p&gt;Plain old ASCII maps each character to a single byte, thereby making it easier to parse. For instance the string “Hello” can be represented as [72, 101, 108, 108, 111] in bytes. This, however, is not the case for the UTF-8 encoding; a Unicode character such as 😎 has a code point value of U+1F60E and requires up to 4 bytes to encode. Therefore if we have a string like “Hell😎o” with a byte representation of [72, 101, 108, 108, 240, 159, 152, 142, 111], the 😎 is represented as [240, 159, 152, 142]. Given a stream of bytes such as [72, 101, 108, 108, 240, 159, 152, 142, 111], how do you interpret it into the required character/string; likewise, how do you generate the correct byte stream given a Unicode character (code point). To understand this, let’s first look briefly at the notions of code points and their encoding with regards to Unicode.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Projects on Anabila</title>
+    <title>Projects on Trunk Whorl</title>
     <link>https://anthonyabeo.github.io/projects/</link>
-    <description>Recent content in Projects on Anabila</description>
-    <image>
-      <url>https://anthonyabeo.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
-      <link>https://anthonyabeo.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
-    </image>
-    <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 25 Sep 2020 10:25:33 +0000</lastBuildDate><atom:link href="https://anthonyabeo.github.io/projects/index.xml" rel="self" type="application/rss+xml" />
+    <description>Recent content in Projects on Trunk Whorl</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 27 Apr 2026 12:00:00 +0000</lastBuildDate>
+    <atom:link href="https://anthonyabeo.github.io/projects/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Obx - Oberon&#43; Compiler</title>
+      <link>https://anthonyabeo.github.io/projects/oberon_plus_compiler/</link>
+      <pubDate>Mon, 27 Apr 2026 12:00:00 +0000</pubDate>
+      <guid>https://anthonyabeo.github.io/projects/oberon_plus_compiler/</guid>
+      <description>&lt;h2 id=&#34;abstract&#34;&gt;ABSTRACT&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/anthonyabeo/obx&#34;&gt;Obx&lt;/a&gt;  is a compact, pedagogical compiler for an extended &lt;a href=&#34;https://oberon-lang.github.io/&#34;&gt;Oberon dialect&lt;/a&gt;. The implementation following a traditional linear pipeline and includes and small standard library for performing operating systems level tasks. The source is parsed into a small, explicitly-typed AST, validated by a straightforward semantic pass, lowered to a simple three-address intermediate representation, and emitted by a minimal backend. The compiler provide a few interfaces for interaction including a Command Line Interface and a &lt;a href=&#34;https://obxplayground.trunkwhorl.com/&#34;&gt;web-based playground&lt;/a&gt; that allows users to check and (soon) run example programs, inspect outputs (diagnostics, control-flow graph, assembly, etc).&lt;/p&gt;</description>
+    </item>
     <item>
       <title>FPGA hardware linear regression implementation using fixed-point arithmetic</title>
       <link>https://anthonyabeo.github.io/projects/linear_regression_accelerator/</link>
       <pubDate>Fri, 25 Sep 2020 10:25:33 +0000</pubDate>
-      
       <guid>https://anthonyabeo.github.io/projects/linear_regression_accelerator/</guid>
-      <description>ABSTRACT In this paper, a hardware design based on the field programmable gate array (FPGA) to implement a linear regression algorithm is presented. The arithmetic operations were optimized by applying a fixed-point number representation for all hardware based computations. A floating-point number training data point was initially created and stored in a personal computer (PC) which was then converted to fixed-point representation and transmitted to the FPGA via a serial communication link.</description>
+      <description>&lt;h2 id=&#34;abstract&#34;&gt;ABSTRACT&lt;/h2&gt;
+&lt;p&gt;In this paper, a hardware design based on the field programmable gate array (FPGA) to implement a linear regression algorithm is presented. The arithmetic operations were optimized by applying a fixed-point number representation for all hardware based computations. A floating-point number training data point was initially created and stored in a personal computer (PC) which was then converted to fixed-point representation and transmitted to the FPGA via a serial communication link. With the proposed VHDL design description synthesized and implemented within the FPGA, the custom hardware architecture performs the linear regression algorithm based on matrix algebra considering a fixed size training data point set. To validate the hardware fixed-point arithmetic operations, the same algorithm was implemented in the Python language and the results of the two computation approaches were compared. The power consumption of the proposed embedded FPGA system was estimated to be 136.82 mW.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

@@ -1,62 +1,53 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Posts on Anabila</title>
+    <title>Posts on Trunk Whorl</title>
     <link>https://anthonyabeo.github.io/posts/</link>
-    <description>Recent content in Posts on Anabila</description>
-    <image>
-      <url>https://anthonyabeo.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
-      <link>https://anthonyabeo.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
-    </image>
-    <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 27 Sep 2021 13:44:57 +0000</lastBuildDate><atom:link href="https://anthonyabeo.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <description>Recent content in Posts on Trunk Whorl</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 27 Sep 2021 13:44:57 +0000</lastBuildDate>
+    <atom:link href="https://anthonyabeo.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Remote Procedure Calls in Go</title>
       <link>https://anthonyabeo.github.io/posts/go-rpc/</link>
       <pubDate>Mon, 27 Sep 2021 13:44:57 +0000</pubDate>
-      
       <guid>https://anthonyabeo.github.io/posts/go-rpc/</guid>
-      <description>Introduction These days most networked applications are designed as logical, self-contained, unifunctional services. Each service communicates with other services to complete some user request. For example, a notification service may contact a user management service to acquire a user&amp;rsquo;s credentials before sending a notification. Such inter-service communication requires a communication protocol such as REST and GraphQL. In this post, I want to briefly introduce another method called Remote Procedure Calls (RPC).</description>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;These days most networked applications are designed as logical, self-contained, unifunctional services. Each service communicates with other services to complete some user request. For example, a notification service may contact a user management service to acquire a user&amp;rsquo;s credentials before sending a notification. Such inter-service communication requires a communication protocol such as REST and GraphQL. In this post, I want to briefly introduce another method called Remote Procedure Calls (RPC).&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Programmaticalizing UTF-8</title>
       <link>https://anthonyabeo.github.io/posts/unicode/</link>
       <pubDate>Wed, 08 Jan 2020 09:34:12 +0000</pubDate>
-      
       <guid>https://anthonyabeo.github.io/posts/unicode/</guid>
-      <description>For an in-depth explanation of the intricacies of Unicode, you can consult the book, Unicode Explained or a host of other online resources. This post, however, is concerned with the UTF-8 encoding. In particular, it deals with encoding Unicode code points into UTF-8 byte streams and vice versa.
-Plain old ASCII maps each character to a single byte, thereby making it easier to parse. For instance the string “Hello” can be represented as [72, 101, 108, 108, 111] in bytes.</description>
+      <description>&lt;p&gt;For an in-depth explanation of the intricacies of Unicode, you can consult the book, Unicode Explained or a host of other online resources. This post, however, is concerned with the UTF-8 encoding. In particular, it deals with encoding Unicode code points into UTF-8 byte streams and vice versa.&lt;/p&gt;
+&lt;p&gt;Plain old ASCII maps each character to a single byte, thereby making it easier to parse. For instance the string “Hello” can be represented as [72, 101, 108, 108, 111] in bytes. This, however, is not the case for the UTF-8 encoding; a Unicode character such as 😎 has a code point value of U+1F60E and requires up to 4 bytes to encode. Therefore if we have a string like “Hell😎o” with a byte representation of [72, 101, 108, 108, 240, 159, 152, 142, 111], the 😎 is represented as [240, 159, 152, 142]. Given a stream of bytes such as [72, 101, 108, 108, 240, 159, 152, 142, 111], how do you interpret it into the required character/string; likewise, how do you generate the correct byte stream given a Unicode character (code point). To understand this, let’s first look briefly at the notions of code points and their encoding with regards to Unicode.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Some (useful) properties of ASCII characters</title>
       <link>https://anthonyabeo.github.io/posts/useful-properties-of-ascii-characters/</link>
       <pubDate>Wed, 17 Apr 2019 08:31:40 +0000</pubDate>
-      
       <guid>https://anthonyabeo.github.io/posts/useful-properties-of-ascii-characters/</guid>
-      <description>When writing programs that deal with characters and strings, some of the methods programmers tend to use include, finding of a character is a digit or alphabet, convert a character from lowercase to uppercase or vice versa, etc. These functionalities come with almost all programming languages and in this article, we will be looking at properties of ASCII characters that make it easier to implement such functionality efficiently.
-Property I: Bit positions 5 and 6 determines the group a character belongs to.</description>
+      <description>&lt;p&gt;When writing programs that deal with characters and strings, some of the methods programmers tend to use include, finding of a character is a digit or alphabet, convert a character from lowercase to uppercase or vice versa, etc. These functionalities come with almost all programming languages and in this article, we will be looking at properties of ASCII characters that make it easier to implement such functionality efficiently.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Property I: Bit positions 5 and 6 determines the group a character belongs to.&lt;/strong&gt;&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Setting Up MongoDB Replica Set On Ubuntu 12.04</title>
       <link>https://anthonyabeo.github.io/posts/mongo-replication/</link>
       <pubDate>Tue, 20 Nov 2018 15:36:33 +0000</pubDate>
-      
       <guid>https://anthonyabeo.github.io/posts/mongo-replication/</guid>
-      <description>Introduction This is a tutorial detailing how to configure a MongoDB replica set. If you are reading this, we can assume you know what a replica set, why is is necessary and how it works. Otherwise you can checkout the MongoDB documentation for replica sets and clusters.
-In this tutorial, i will be using 3 Vagrant Ubuntu 12.04 boxes and MongoDB version 2.4.10. You should be comfortable spinning up vagrant boxes as this tutorial will not cover that.</description>
+      <description>&lt;h3 id=&#34;introduction&#34;&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;This is a tutorial detailing how to configure a MongoDB replica set. If you are reading this, we can assume you know what a replica set, why is is necessary and how it works. Otherwise you can checkout the MongoDB documentation for replica sets and clusters.&lt;/p&gt;
+&lt;p&gt;In this tutorial, i will be using 3 Vagrant Ubuntu 12.04 boxes and MongoDB version 2.4.10. You should be comfortable spinning up vagrant boxes as this tutorial will not cover that. So let&amp;rsquo;s get started.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>The Circuitry of Computer Memory</title>
       <link>https://anthonyabeo.github.io/posts/circuitry-of-computer-memory/</link>
       <pubDate>Sun, 13 May 2018 16:39:54 +0000</pubDate>
-      
       <guid>https://anthonyabeo.github.io/posts/circuitry-of-computer-memory/</guid>
-      <description>BACKGROUND A computer is useful because it is a device that can not only execute instructions but can also store and retrieve information along the way to aid in the execution of such instructions. Like everything else in an electronic computer, the component that handles this functionality (the memory subsystem) is made up of electronic circuits. In this article, I will like to share a high-level overview of what this circuitry looks like and how it operates.</description>
+      <description>&lt;h3 id=&#34;background&#34;&gt;BACKGROUND&lt;/h3&gt;
+&lt;p&gt;A computer is useful because it is a device that can not only execute instructions but can also store and retrieve information along the way to aid in the execution of such instructions. Like everything else in an electronic computer, the component that handles this functionality (the memory subsystem) is made up of electronic circuits. In this article, I will like to share a high-level overview of what this circuitry looks like and how it operates. Electronic circuits are built from basic elements called &lt;strong&gt;logic gates&lt;/strong&gt; (AND, OR, NAND, etc). It is advisable that the reader know these basic elements and understands how they operate as this will make it easier to follow along with the material. This Wikipedia &lt;a href=&#34;https://en.wikipedia.org/wiki/Logic_gate&#34;&gt;article&lt;/a&gt; is a start.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

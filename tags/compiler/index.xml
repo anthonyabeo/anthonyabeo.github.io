@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Compiler on Trunk Whorl</title>
+    <link>https://anthonyabeo.github.io/tags/compiler/</link>
+    <description>Recent content in Compiler on Trunk Whorl</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 13 Jul 2026 11:22:54 +0000</lastBuildDate>
+    <atom:link href="https://anthonyabeo.github.io/tags/compiler/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Designing a Data-Oriented Compiler, Part 1</title>
+      <link>https://anthonyabeo.github.io/posts/designing-a-data-oriented-compiler-part-1/</link>
+      <pubDate>Mon, 13 Jul 2026 11:22:54 +0000</pubDate>
+      <guid>https://anthonyabeo.github.io/posts/designing-a-data-oriented-compiler-part-1/</guid>
+      <description>An introduction to a new series on building a data-oriented compiler, using the Kiwi compiler as the running example.</description>
+    </item>
+  </channel>
+</rss>

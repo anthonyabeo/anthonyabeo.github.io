@@ -6,8 +6,15 @@
     <description>Recent content on Trunk Whorl</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 27 Apr 2026 12:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 13 Jul 2026 11:22:54 +0000</lastBuildDate>
     <atom:link href="https://anthonyabeo.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Designing a Data-Oriented Compiler, Part 1</title>
+      <link>https://anthonyabeo.github.io/posts/designing-a-data-oriented-compiler-part-1/</link>
+      <pubDate>Mon, 13 Jul 2026 11:22:54 +0000</pubDate>
+      <guid>https://anthonyabeo.github.io/posts/designing-a-data-oriented-compiler-part-1/</guid>
+      <description>An introduction to a new series on building a data-oriented compiler, using the Kiwi compiler as the running example.</description>
+    </item>
     <item>
       <title>Obx - Oberon&#43; Compiler</title>
       <link>https://anthonyabeo.github.io/projects/oberon_plus_compiler/</link>
